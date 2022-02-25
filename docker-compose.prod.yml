@@ -4,8 +4,6 @@ services:
   db:
     container_name: db_prod
     image: postgres
-    # volumes:
-    #   - ./app/data/db:/var/lib/postgresql/data
     env_file: .env.prod
 
   web:
@@ -13,9 +11,11 @@ services:
     build: 
       context: ./app
       dockerfile: Dockerfile.prod
+    volumes:
+      - ./app/static:/home/app/web/static
+      - ./app/media:/home/app/web/media
     command: sh -c "
       /wait &&
-      python3 manage.py migrate &&
       gunicorn movieguessr.wsgi:application --bind 0.0.0.0:8000"
     expose:
       - 8000
@@ -25,9 +25,9 @@ services:
     
   nginx:
     build: ./nginx
-    # volumes:
-    #   - static_volume:/home/app/web/staticfiles
-    #   - media_volume:/home/app/web/mediafiles
+    volumes:
+      - ./app/static:/home/app/web/static
+      - ./app/media:/home/app/web/media
     ports:
       - 80:80
     depends_on:

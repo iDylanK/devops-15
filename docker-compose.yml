@@ -4,8 +4,6 @@ services:
   db:
     container_name: db_dev
     image: postgres
-    # volumes:
-    #   - ./app/data/db:/var/lib/postgresql/data
     env_file: .env.dev
 
   web:

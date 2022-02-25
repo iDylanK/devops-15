@@ -1,6 +1,8 @@
 # Project specific
 data
 .env.prod
+static
+media
 
 ### Django ###
 *.log
