@@ -2,6 +2,7 @@ version: "3.9"
    
 services:
   db:
+    container_name: db_dev
     image: postgres
     volumes:
       - ./app/data/db:/var/lib/postgresql/data
@@ -9,7 +10,9 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
   web:
+    container_name: web_dev
     build: ./app
     command: sh -c "
       /wait &&

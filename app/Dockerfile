@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM python:3.9
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
@@ -12,7 +13,7 @@ RUN pip3 install -r requirements.txt
 ENV WAIT_VERSION 2.7.2
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
 
-# Done inside the docker-compose.yml
+# Set the execute permissions.
 RUN chmod +x /wait
 
 # CMD ["python3 manage.py migrate"]
