@@ -2,7 +2,7 @@ dev:
 	docker-compose -f docker-compose.yml -p movieguessr_dev up
 
 prod:
-	docker-compose -f docker-compose.prod.yml -p movieguessr_prod up
+	docker-compose -f docker-compose.prod.yml -p movieguessr_prod up --detach
 
 test:
 	docker-compose -f docker-compose.yml -p movieguessr_dev up --detach

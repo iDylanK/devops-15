@@ -20,17 +20,19 @@ jobs:
         run: docker exec web_dev python3 manage.py test movieguessr/tests/
       - name: Output summary to console
         run: echo ${{ steps.run-api-tests.outputs.summary }}
-  deploy:
-    runs-on: ubuntu-latest
-    needs: django-tests  
-    # if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Login to Container Registry
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: django-tests  
+  #   # if: github.ref == 'refs/heads/main'
+  #   steps:
+  #     - name: Build and run docker production image
+  #       run: make prod
+  #     - name: Login to Container Registry
+  #       uses: docker/login-action@v1
+  #       with:
+  #         username: ${{ secrets.REGISTRY_USERNAME }}
+  #         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Push image to docker hub Container Registry
-        run: |
-          docker push $REPO_NAME/$IMAGE_NAME
+  #     - name: Push image to docker hub Container Registry
+  #       run: |
+  #         docker push $REPO_NAME/$IMAGE_NAME
