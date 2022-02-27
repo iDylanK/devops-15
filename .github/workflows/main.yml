@@ -6,7 +6,7 @@ env:
   WAIT_HOSTS: localhost:8000
 
 jobs:
-  build:
+  django-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,10 +15,6 @@ jobs:
         run: make test
       - name: Wait for Container to host webpage
         run: wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait && chmod +x wait && ./wait
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Run Django API  Tests
         id: run-api-tests
         run: docker exec web_dev python3 manage.py test movieguessr/tests/
