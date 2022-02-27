@@ -13,7 +13,7 @@ jobs:
       - name: Build and run docker
         run: make test
       - name: Wait for Container to host webpage
-        run: wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait && ./wait
+        run: wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait && chmod +x wait && ./wait
       - name: Run Django API  Tests
         id: run-api-tests
         run: docker exec web_dev python3 manage.py test movieguessr/tests/
