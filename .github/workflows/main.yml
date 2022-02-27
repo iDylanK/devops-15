@@ -3,7 +3,7 @@ on: [push]
 env:
   IMAGE_NAME: movieguessr
   REPO_NAME: idylank
-  WAIT_HOSTS: 80
+  WAIT_HOSTS: 8000
 
 jobs:
   build:
