@@ -17,6 +17,7 @@ jobs:
         run: wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait && chmod +x wait && ./wait
   test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Run Django API  Tests
         id: run-api-tests
