@@ -3,13 +3,14 @@ on: [push]
 env:
   IMAGE_NAME: movieguessr
   REPO_NAME: idylank
-  WAIT_HOSTS: 8000
+  WAIT_HOSTS: localhost:8000
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout repo
       - name: Build and run docker
         run: make test
       - name: Wait for Container to host webpage
