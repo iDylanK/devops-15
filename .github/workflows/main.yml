@@ -45,7 +45,7 @@ jobs:
       - name: Install ECS CLI
         run: 
           mkdir -p "$HOME/tools/ecs-cli" &&
-          curl -Lo "$HOME/tools/ecs-cli" https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest &&
+          curl -Lo "$HOME/tools/ecs-cli/ecs-cli" https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest &&
           chmod +x "$HOME/tools/ecs-cli/ecs-cli" &&
           echo "$HOME/tools/ecs-cli" >> $GITHUB_PATH
       # The .env.prod is a dummy, to make sure the ecs-cli compose will work. The actual keys are set in the 
