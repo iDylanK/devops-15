@@ -1,0 +1,11 @@
+version: 3
+task_definition:
+   services:
+    db:
+      name: db
+      mem_limit: 128M
+    web:
+      mem_limit: 128M
+    nginx:
+      mem_limit: 128M
+      # depends_on: web
