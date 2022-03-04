@@ -4,13 +4,15 @@ services:
   db:
     container_name: db_dev
     image: mysql
-    env_file: .env.dev
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=movieguessr
 
   web:
     container_name: web_dev
     build: 
       context: ./app
-      target: base
+      target: dev
     volumes:
       - ./app:/home/app/web
     command: sh -c "

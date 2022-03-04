@@ -92,9 +92,9 @@ WSGI_APPLICATION = 'movieguessr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE'),
-        'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD'),
+        'NAME': os.environ.get('MYSQL_DATABASE', 'movieguessr'),
+        'USER': os.environ.get('MYSQL_USER', 'root'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'root'),
         'HOST': 'db',
         'PORT': 3306,
     }
