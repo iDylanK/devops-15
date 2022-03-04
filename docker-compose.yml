@@ -3,7 +3,7 @@ version: "3.0"
 services:
   db:
     container_name: db_dev
-    image: postgres
+    image: mysql
     env_file: .env.dev
 
   web:
