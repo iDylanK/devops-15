@@ -1,7 +1,7 @@
 # MovieGuessr
 
 ## Development
-- Build and/or run using: `make dev`
+- Build and/or run using: `make dev` running on port 8000.
 - The .env.dev is used for environment settings.
 - Database migrations and collectstatic are done on every boot.
 - To run database migrations manually: `docker exec web_dev python3 manage.py migrate`
@@ -11,3 +11,4 @@
 ## Production
 - To run database migrations manually: `...`
 - To set the static folder: `...`
+
