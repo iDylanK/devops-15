@@ -35,10 +35,8 @@ RUN addgroup --system app
 RUN adduser app --ingroup app
 
 # create the appropriate directories
-RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/static
 RUN mkdir $APP_HOME/media
-WORKDIR $APP_HOME
 
 # copy project
 COPY . $APP_HOME
