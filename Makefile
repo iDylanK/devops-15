@@ -1,13 +1,14 @@
 dev:
 	docker-compose -f docker-compose.yml -p movieguessr_dev up
 
+test:
+	docker-compose -f docker-compose.yml -p movieguessr_dev up --detach
+
 prod:
 	docker build -t idylank/movieguessr:web app -f app/Dockerfile.prod
 	docker build -t idylank/movieguessr:nginx nginx
-	docker-compose -f docker-compose.prod.yml -p movieguessr_prod up --detach
-
-test:
-	docker-compose -f docker-compose.yml -p movieguessr_dev up --detach
+	docker push idylank/movieguessr:web
+	docker push idylank/movieguessr:nginx
 
 stop:
 	docker ps -a -q | ( while read ID; do docker stop $$ID; done )
@@ -23,9 +24,3 @@ rm:
 rm-images:
 	docker ps -a -q | ( while read ID; do docker stop $$ID; done )
 	docker images -a -q | ( while read ID; do docker rmi -f $$ID; done )
-
-build-hub:
-	docker build -t idylank/movieguessr:web app -f app/Dockerfile.prod
-	docker build -t idylank/movieguessr:nginx nginx
-	docker push idylank/movieguessr:web
-	docker push idylank/movieguessr:nginx

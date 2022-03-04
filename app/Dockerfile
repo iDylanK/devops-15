@@ -8,6 +8,10 @@ WORKDIR /movieguessr
 COPY requirements.txt /movieguessr/
 RUN pip3 install -r requirements.txt
 
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+WORKDIR $APP_HOME
+
 # Add docker-compose-wait tool -------------------
 # This is needed for Django to wait for the PostgreSQL database to be running bofore continuing.
 ENV WAIT_VERSION 2.7.2
@@ -15,5 +19,3 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERS
 
 # Set the execute permissions.
 RUN chmod +x /wait
-
-# CMD ["python3 manage.py migrate"]
