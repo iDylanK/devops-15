@@ -25,7 +25,7 @@ jobs:
           # Delay between retries
           retry-delay: 1s # Optional, only applicable to max-attempts > 1
           # Retry all errors, including 404. This option might trigger curl upgrade.
-          retry-all: false # Optional, defaults to "false"
+          retry-all: true # Optional, defaults to "false"
       - name: Run Django API  Tests
         id: run-api-tests
         run: docker exec web_dev python3 manage.py test movieguessr/tests/
