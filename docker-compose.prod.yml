@@ -1,34 +1,46 @@
-version: "3.9"
+version: "3.0"
    
 services:
   db:
-    container_name: db_prod
     image: postgres
     env_file: .env.prod
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: MovieGuessrLogs
+        awslogs-stream-prefix: db
+        awslogs-region: eu-west-2
 
   web:
-    container_name: web_prod
-    build: 
-      context: ./app
-      dockerfile: Dockerfile.prod
+    image: idylank/movieguessr:web
     volumes:
       - ./app/static:/home/app/web/static
       - ./app/media:/home/app/web/media
     command: sh -c "
       /wait &&
       gunicorn movieguessr.wsgi:application --bind 0.0.0.0:8000"
-    expose:
-      - 8000
     env_file: .env.prod
-    depends_on:
+    links:
       - db
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: MovieGuessrLogs
+        awslogs-stream-prefix: web
+        awslogs-region: eu-west-2
     
   nginx:
-    build: ./nginx
+    image: idylank/movieguessr:nginx
     volumes:
       - ./app/static:/home/app/web/static
       - ./app/media:/home/app/web/media
     ports:
       - 80:80
-    depends_on:
+    links:
       - web
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: MovieGuessrLogs
+        awslogs-stream-prefix: nginx
+        awslogs-region: eu-west-2
