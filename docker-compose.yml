@@ -8,7 +8,9 @@ services:
 
   web:
     container_name: web_dev
-    build: ./app
+    build: 
+      context: ./app
+      target: base
     volumes:
       - ./app:/home/app/web
     command: sh -c "

@@ -5,7 +5,7 @@ test:
 	docker-compose -f docker-compose.yml -p movieguessr_dev up --detach
 
 prod:
-	docker build -t idylank/movieguessr:web app -f app/Dockerfile.prod
+	docker build -t idylank/movieguessr:web app --target prod
 	docker build -t idylank/movieguessr:nginx nginx
 	docker push idylank/movieguessr:web
 	docker push idylank/movieguessr:nginx
