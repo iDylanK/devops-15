@@ -3,7 +3,7 @@ on: [push]
 env:
   IMAGE_NAME: movieguessr
   REPO_NAME: idylank
-  WAIT_HOSTS: localhost:3306
+  WAIT_HOSTS: localhost:8000
 
 jobs:
   django-tests:

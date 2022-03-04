@@ -7,8 +7,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=movieguessr
-    ports:
-      - 3306:3306
 
   web:
     container_name: web_dev
