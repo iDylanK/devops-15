@@ -30,17 +30,11 @@ WORKDIR $APP_HOME
 ################################################
 FROM base as prod
 
-# create directory for the app user
-RUN mkdir -p /home/app
-
 # create the app user
 RUN addgroup --system app 
 RUN adduser app --ingroup app
-# RUN adduser app app
 
 # create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/static
 RUN mkdir $APP_HOME/media
