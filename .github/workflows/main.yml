@@ -34,7 +34,7 @@ jobs:
   push:
     runs-on: ubuntu-latest
     needs: django-tests  
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         name: Checkout repo
@@ -49,7 +49,7 @@ jobs:
   deploy: 
     runs-on: ubuntu-latest
     needs: push
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         name: Checkout repo
