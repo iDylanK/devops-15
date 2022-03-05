@@ -2,7 +2,7 @@ dev:
 	docker-compose -f docker-compose.yml -p movieguessr_dev up
 
 test:
-	docker-compose -f docker-compose.yml -p movieguessr_dev up
+	docker-compose -f docker-compose.yml -p movieguessr_dev up --detach
 
 prod:
 	docker build -t idylank/movieguessr:web app --target prod
