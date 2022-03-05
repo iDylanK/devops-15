@@ -1,11 +1,13 @@
 version: 3
 task_definition:
-   services:
-    db:
-      name: db
-      mem_limit: 128M
+  task_execution_role: MovieGuessrSecrets
+  services:
     web:
-      mem_limit: 128M
+      mem_limit: 200M
+      secrets:
+        - value_from: MYSQL_USER
+          name: MYSQL_USER
+        - value_from: MYSQL_PASSWORD
+          name: MYSQL_PASSWORD
     nginx:
-      mem_limit: 128M
-      # depends_on: web
+      mem_limit: 200M

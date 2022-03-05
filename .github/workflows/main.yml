@@ -13,8 +13,19 @@ jobs:
         name: Checkout repo
       - name: Build and run docker
         run: make test
-      - name: Wait for Container to host webpage
-        run: wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait && chmod +x wait && ./wait
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v2
+        with:
+          # Check the following URLs one by one sequentially
+          url: localhost:8000
+          # Follow redirects, or just report success on 3xx status codes
+          follow-redirect: false # Optional, defaults to "false"
+          # Fail this action after this many failed attempts
+          max-attempts: 7 # Optional, defaults to 1
+          # Delay between retries
+          retry-delay: 5s # Optional, only applicable to max-attempts > 1
+          # Retry all errors, including 404. This option might trigger curl upgrade.
+          retry-all: true # Optional, defaults to "false"
       - name: Run Django API  Tests
         id: run-api-tests
         run: docker exec web_dev python3 manage.py test movieguessr/tests/
@@ -48,11 +59,8 @@ jobs:
           curl -Lo "$HOME/tools/ecs-cli/ecs-cli" https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest &&
           chmod +x "$HOME/tools/ecs-cli/ecs-cli" &&
           echo "$HOME/tools/ecs-cli" >> $GITHUB_PATH
-      # The .env.prod is a dummy, to make sure the ecs-cli compose will work. The actual keys are set in the 
-      # AWS Security Key manger. 
       - name: Deploy to AWS
         run:
-          cp .env.dev .env.prod && 
           export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" &&
           export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" &&
           export AWS_DEFAULT_REGION=eu-west-2 &&
