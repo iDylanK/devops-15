@@ -20,7 +20,11 @@ from django.http import HttpResponse
 def home(request):
     return HttpResponse("Home")
 
+def game(request):
+    return HttpResponse("Game")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', home), 
+    path('game/', game), # Game home page: Decide how this works with accounts.
 ]
