@@ -5,6 +5,7 @@ services:
     image: idylank/movieguessr:web
     restart: always
     command: sh -c "
+      python3 manage.py migrate &&
       gunicorn movieguessr.wsgi:application --bind 0.0.0.0:8000"
     environment:
       - DEBUG=True
