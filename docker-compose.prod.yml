@@ -4,9 +4,6 @@ services:
   web:
     image: idylank/movieguessr:web
     restart: always
-    volumes:
-      - ./app/static:/home/app/web/static
-      - ./app/media:/home/app/web/media
     command: sh -c "
       gunicorn movieguessr.wsgi:application --bind 0.0.0.0:8000"
     environment:
@@ -22,9 +19,6 @@ services:
   nginx:
     image: idylank/movieguessr:nginx
     restart: always
-    volumes:
-      - ./app/static:/home/app/web/static
-      - ./app/media:/home/app/web/media
     ports:
       - 80:80
     links:
