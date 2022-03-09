@@ -143,7 +143,7 @@ S3 = os.getenv('S3', 'False') == 'True' or os.getenv('S3', 'False') == 'TRUE'
 if S3:
     # Get the AWS ID and Secret by making a request to AWS_CONTAINER_CREDENTIALS_RELATIVE_URI env value.
     # This is set by the ECS. 
-    url = os.getenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI', "http://docker.for.mac.host.internal:8888/test.json")
+    url = os.getenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI', "/")
     data = json.loads(requests.get(url).text)
 
     AWS_ACCESS_KEY_ID = data['AccessKeyId']
