@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import requests
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -135,8 +138,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
+S3 = os.getenv('S3', 'False') == 'True' or os.getenv('S3', 'False') == 'TRUE'
+
+if S3:
+    # Get the AWS ID and Secret by making a request to AWS_CONTAINER_CREDENTIALS_RELATIVE_URI env value.
+    # This is set by the ECS. 
+    url = os.getenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI', "http://docker.for.mac.host.internal:8888/test.json")
+    data = json.loads(requests.get(url).text)
+
+    AWS_ACCESS_KEY_ID = data['AccessKeyId']
+    AWS_SECRET_ACCESS_KEY = data['SecretAccessKey']
+
+    AWS_S3_REGION_NAME = 'eu-west-2'
+    AWS_STORAGE_BUCKET_NAME = 'movieguessr'
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+    # s3 static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+else:
+    STATIC_URL = "/static/"
+    STATIC_ROOT = BASE_DIR / "static"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

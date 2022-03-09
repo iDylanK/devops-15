@@ -1,6 +1,7 @@
 version: 3
 task_definition:
   task_execution_role: MovieGuessrSecrets
+  task_role_arn: arn:aws:iam::307070578922:role/MovieGuessrBucketRole
   services:
     web:
       mem_limit: 200M
