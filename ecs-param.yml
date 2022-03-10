@@ -10,6 +10,8 @@ task_definition:
           name: MYSQL_USER
         - value_from: MYSQL_PASSWORD
           name: MYSQL_PASSWORD
+        - value_from: MYSQL_HOST
+          name: MYSQL_HOST
         - value_from: SECRET_KEY
           name: SECRET_KEY
     nginx:
