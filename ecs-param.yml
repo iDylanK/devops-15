@@ -1,6 +1,7 @@
 version: 3
 task_definition:
   task_execution_role: MovieGuessrSecrets
+  task_role_arn: arn:aws:iam::307070578922:role/MovieGuessrBucketRole
   services:
     web:
       mem_limit: 200M
@@ -9,6 +10,8 @@ task_definition:
           name: MYSQL_USER
         - value_from: MYSQL_PASSWORD
           name: MYSQL_PASSWORD
+        - value_from: MYSQL_HOST
+          name: MYSQL_HOST
         - value_from: SECRET_KEY
           name: SECRET_KEY
     nginx:

@@ -4,13 +4,12 @@ services:
   web:
     image: idylank/movieguessr:web
     restart: always
-    volumes:
-      - ./app/static:/home/app/web/static
-      - ./app/media:/home/app/web/media
     command: sh -c "
+      python3 manage.py migrate &&
       gunicorn movieguessr.wsgi:application --bind 0.0.0.0:8000"
     environment:
-      - DEBUG=True
+      - DEBUG=False
+      - S3=True
       - ALLOWED_HOSTS=* # TODO: NOT SECURE * allowing all hosts
     logging:
       driver: awslogs
@@ -22,9 +21,6 @@ services:
   nginx:
     image: idylank/movieguessr:nginx
     restart: always
-    volumes:
-      - ./app/static:/home/app/web/static
-      - ./app/media:/home/app/web/media
     ports:
       - 80:80
     links:
