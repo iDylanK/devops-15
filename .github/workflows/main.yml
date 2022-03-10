@@ -66,5 +66,5 @@ jobs:
           export AWS_DEFAULT_REGION=eu-west-2 &&
           ecs-cli compose --file docker-compose.prod.yml --project-name movieguessr service stop --cluster MovieGuessrCluster &&
           ecs-cli compose --file docker-compose.prod.yml --ecs-params ecs-param.yml --project-name movieguessr service up --cluster MovieGuessrCluster &&
-          ecs-cli compose --file docker-compose.prod.yml service scale 2 --cluster MovieGuessrCluster
+          ecs-cli compose --file docker-compose.prod.yml --project-name movieguessr service scale 2 --cluster MovieGuessrCluster
       
