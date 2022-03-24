@@ -1,78 +1,121 @@
 from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-import json
+from django.contrib import messages
 
 # This should probably be called in another file, should be refactored.
 from movieguessr.models import Game, Movie, UserGame
     
 
 def game(request):
-    return render(request, "game/daily.html")
+    # TODO: auth check DRY code.. middleware?
+    if request.user is None:
+        return HttpResponse("Unauthenticated")
 
-def game_render(request):
-    userGame = find_game(1)
-    if userGame is None:
-        print("Help! No game today... Is a game missing in our database?")
-        return redirect('main')
+    # TODO: game check DRY code.. middleware?
+    user_game = find_game(request.user)
+    if user_game is None:
+        return HttpResponse("No game error..")
     
-    if userGame.score > 0: # Meaning the game has already been played... What do we do? Redirect?
-        return redirect("/gamewon/")
+    daily_game = user_game.game
+    guesses = user_game.tries
+    
+    # Check if the game is already played.
+    if game_played(request, user_game):
+        return redirect("main")
 
-    if userGame.tries > 5: # Meaning the game has already been played... What do we do? Redirect?
-        return redirect("/gamelost/")
+    return render(request, "game/daily.html", {'daily_game': daily_game, 'guesses': guesses, 'remaining': 6-guesses})
 
-    return render(request, "game/daily.html")
+def game_guess(request):
+    # TODO: auth check DRY code.. middleware?
+    if request.user is None:
+        return HttpResponse("Unauthenticated")
 
-def gameguess(request):
-    userGame = find_game(request.user)
+    # TODO: game check DRY code.. middleware?
+    user_game = find_game(request.user)
+    if user_game is None:
+        return HttpResponse("No game error..")
 
-    # How to handle duplication of this if statement? Making a function does not work as we need a return. Exception?
-    if userGame is None:
-        print("Help! No game today... Is a game missing in our database?")
-        return redirect('/error/')
+    daily_game = user_game.game
 
-    if userGame.score > 0: # Meaning the game has already been played... What do we do? Redirect?
-        return redirect("/gamewon/")
+    # Check if the game is already played.
+    if game_played(request, user_game):
+        return redirect("main")
 
-    if userGame.tries > 5: # Meaning the game has already been played... What do we do? Redirect?
-        return redirect("/gamelost/")
-
-
-    # We have loaded the game twice, theoretically could be next day now.
-    dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
-    gameToday = Game.objects.filter(date=dateTodayAsString).first()
-    body = json.loads(request.body)
-    guess = body['guess']
-    if guess.lower() == gameToday.movie.title.lower():
-        userGame.score = 1
-        userGame.save(update_fields=['score'])
-        return redirect("/gamewon/")
+    guess = request.POST.get('guess', '')
+    if guess.lower().replace(" ", "") == daily_game.movie.title.lower().replace(" ", ""):
+        user_game.score = 1
+        user_game.save(update_fields=['score'])
+        return redirect("game_won")
     else: 
-        userGame.tries = userGame.tries + 1
-        userGame.save(update_fields=['tries'])
-        if userGame.tries > 5:
-            return redirect("/gamelost/")
+        user_game.tries = user_game.tries + 1
+        user_game.save(update_fields=['tries'])
+        if user_game.tries > 5:
+            return redirect("game_lost")
 
-    return HttpResponse("Hmm... That doesn't seem right. Try again!")
+    return redirect("game")
 
-def gamewon(request):
-    return HttpResponse("Game won! Please wait until tomorrow for the next game.")
+def game_won(request):
+    if request.user is None:
+        return HttpResponse("Unauthenticated")
 
-def gamelost(request):
-    return HttpResponse("Game lost... Please wait until tomorrow for the next game.")
+    # TODO: game check DRY code.. middleware?
+    user_game = find_game(request.user)
+    if user_game is None:
+        return HttpResponse("No game error..")
+
+    if user_game.score == 0:
+        return HttpResponse("Game error..")
+    
+    messages.add_message(request, messages.INFO, f'Game won with score: {user_game.score} !') 
+    return redirect("main")
+
+def game_lost(request):
+    if request.user is None:
+        return HttpResponse("Unauthenticated")
+
+    # TODO: game check DRY code.. middleware?
+    user_game = find_game(request.user)
+    if user_game is None:
+        return HttpResponse("No game error..")
+
+    if user_game.tries < 6:
+        return HttpResponse("Game error..")
+    
+    messages.add_message(request, messages.INFO, 'Game Lost!')
+    return redirect("main")
+
+def games_delete(request):
+    if request.user is None:
+        return HttpResponse("Unauthenticated")
+
+    UserGame.objects.all().delete()
+    return redirect("main")
 
 def find_game(user_id):
     dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
-    gameToday = Game.objects.filter(date=dateTodayAsString).first()
-    if gameToday is None:
+    # TODO: today game..
+    # gameToday = Game.objects.filter(date=dateTodayAsString).first()
+    daily_game = Game.objects.first()
+    if daily_game is None:
         return None
     else:
-        userGame = UserGame.objects.filter(user=user_id, game=gameToday.id).first()
+        user_game = UserGame.objects.filter(user=user_id, game=daily_game.id).first()
 
-    if userGame is None:
-        userGame = UserGame(user=user_id, game=gameToday)
-        userGame.save()
+    if user_game is None:
+        user_game = UserGame(user=user_id, game=daily_game)
+        user_game.save()
     # else: Well, it already exists, nothing to do...
 
-    return userGame
+    return user_game
+
+def game_played(request, user_game):
+    if user_game.score > 0: # Meaning the game has already been played... What do we do? Redirect?
+        messages.add_message(request, messages.INFO, 'Game already played.')
+        return True
+
+    if user_game.tries > 5: # Meaning the game has already been played... What do we do? Redirect?
+        messages.add_message(request, messages.INFO, 'Game already played.')
+        return True
+    
+    return False

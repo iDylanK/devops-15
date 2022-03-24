@@ -2,62 +2,50 @@
 
 {% block content %}
 
-<table id="t01">
-
-    <tr>
-      <th>User</th>
-      <th>Movie</th>
-      <th># Tries</th>
-      <th>Score</th>
-      <th>Date</th>
-      <th>Total Score</th>
-    </tr>
-  
-    {% for item in scores %}
-  
-    <tr>
-  
-      <td>{{ item.user }}</td>
-      <td>{{ item.movie }}</td>
-      <td>{{ item.tries }}</td>
-      <td>{{ item.score }}</td>
-      <td>{{ item.game_date }}</td>
-      <td>{{ item.total_score }}</td>
-    </tr>
-  {% endfor %}
-  </table>
-  <br>
-
-
-
-<div class="hintStyle">
-    <p class="textHint">
-        hint 1: random hint text here - random hint text here
-    </p>
-    <p class="textHint">
-        hint 2: random hint text here - random hint text here
-    </p>
-    <p class="textHint">
-        hint 3: random hint text here - random hint text here
-    </p>
-    <p class="textHint">
-        hint 4: random hint text here - random hint text here
-    </p>
+<div class="row ">
+    <div class="col d-flex justify-content-center">
+        <img class="w-25 " src="{{ daily_game.movie.image_url }}">
+    </div>
 </div>
 
 <div class="hintStyle">
+    {% if guesses >= 1 %}
     <p class="textHint">
-        Summary: random summary text here - random summary text here
-        - random summary text here - random summary text here
-        - random summary text here - random summary text here
+        hint 1: {{ daily_game.movie.tagline }}
     </p>
+    {% endif %}
+
+    {% if guesses >= 2 %}
+    <p class="textHint">
+        hint 2: {{ daily_game.movie.genres }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 3 %}
+    <p class="textHint">
+        hint 3: {{ daily_game.movie.character }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 4 %}
+    <p class="textHint">
+        hint 4: {{ daily_game.movie.actor }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 5 %}
+    <p class="textHint">
+        hint 5:<br> {{ daily_game.movie.summary }}
+    </p>
+    {% endif %}
 
 </div>
 
-<form class="textIn">
+<form method="POST" action="{% url 'guess' %}" class="textIn">
+    {% csrf_token %}
     <br>
     <label for="fname">Movie Title:</label>
-    <input type="text" id="fname" name="fname" class="textField">
+    <input type="text" id="guess" name="guess" class="">
     <br><br>
 
 </form>

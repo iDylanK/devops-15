@@ -14,11 +14,6 @@
 </style>
 
 <div>
-    <span>
-        {% if user.is_authenticated %}
-            <span><a href="{% url 'main' %}">Back</a></span>
-        {% endif %}
-    </span>
     <div class="flexboxLeft">
         <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
         <div id="myDropdown" class="dropdown-content">
@@ -38,4 +33,14 @@
         {% endif %}
     </span>
     <span class="title">MovieGuessr</span>
+    
+    {% if daily_game is not None %}
+    <div class="flexbox2" >
+        <div class="title2">remaining guesses</div>
+        <div class="leftGuess">
+            <p class="try">{{ remaining }}</p>
+        </div>
+    </div>
+    {% endif %}
+
 </div>

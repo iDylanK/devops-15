@@ -25,11 +25,12 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register', views.register, name='register'),
     path('accounts/profile/', views.profile),
+    path('accounts/games/delete', views.games_delete, name="games_delete"), # Testing only..
 
     path('leaderboard/', views.leaderboard, name='leaderboard'),
 
     path('game/', views.game, name='game'), # Game home page: Decide how this works with accounts.
-    path('gameguess/', views.gameguess),
-    path('gamewon/', views.gamewon),
-    path('gamelost/', views.gamelost),
+    path('game/guess/', views.game_guess, name="guess"),
+    path('game/won/', views.game_won, name="game_won"),
+    path('game/lost/', views.game_lost, name="game_lost"),
 ]
