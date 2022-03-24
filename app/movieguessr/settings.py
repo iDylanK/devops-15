@@ -141,6 +141,8 @@ USE_TZ = True
 
 S3 = os.getenv('S3', 'False') == 'True' or os.getenv('S3', 'False') == 'TRUE'
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "movieguessr/static")]
+
 if S3:
     # Get the AWS ID and Secret by making a request to AWS_CONTAINER_CREDENTIALS_RELATIVE_URI env value.
     # This is set by the ECS. 
@@ -163,7 +165,7 @@ if S3:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 else:
     STATIC_URL = "/static/"
-    STATIC_ROOT = BASE_DIR / "static"
+    STATIC_ROOT = BASE_DIR / "movieguessr/public/static"
 
 
 # Default primary key field type
