@@ -1,0 +1,53 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="row ">
+    <div class="col d-flex justify-content-center">
+        <img class="w-25 " src="{{ daily_game.movie.image_url }}">
+    </div>
+</div>
+
+<div class="hintStyle">
+    {% if guesses >= 1 %}
+    <p class="textHint">
+        hint 1: {{ daily_game.movie.tagline }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 2 %}
+    <p class="textHint">
+        hint 2: {{ daily_game.movie.genres }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 3 %}
+    <p class="textHint">
+        hint 3: {{ daily_game.movie.character }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 4 %}
+    <p class="textHint">
+        hint 4: {{ daily_game.movie.actor }}
+    </p>
+    {% endif %}
+
+    {% if guesses >= 5 %}
+    <p class="textHint">
+        hint 5:<br> {{ daily_game.movie.summary }}
+    </p>
+    {% endif %}
+
+</div>
+
+<form method="POST" action="{% url 'guess' %}" class="textIn">
+    {% csrf_token %}
+    <br>
+    <label for="fname">Movie Title:</label>
+    <input type="text" id="guess" name="guess" class="">
+    <br><br>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+Leaderboard
+
+{% else %}
+
+Authenticate - Possibly better using a Auth Middleware....
+
+
+{% endif %}
+
+{% endblock %}

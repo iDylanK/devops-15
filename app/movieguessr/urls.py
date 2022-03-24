@@ -13,18 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("Home")
-
-def game(request):
-    return HttpResponse("Game")
+from django.conf.urls import include
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', home), 
-    path('game/', game), # Game home page: Decide how this works with accounts.
+    path('', views.main, name='main'),
+
+    path('accounts/logout/', views.logout, name='logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/register/', views.register, name='register'),
+    path('accounts/profile/', views.profile),
+    path('accounts/games/delete/', views.games_delete, name="games_delete"), # Testing only..
+
+    path('leaderboard/', views.leaderboard, name='leaderboard'),
+
+    path('game/', views.game, name='game'), # Game home page: Decide how this works with accounts.
+    path('game/guess/', views.game_guess, name="guess"),
+    path('game/won/', views.game_won, name="game_won"),
+    path('game/lost/', views.game_lost, name="game_lost"),
 ]

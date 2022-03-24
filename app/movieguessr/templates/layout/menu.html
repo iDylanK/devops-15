@@ -1,0 +1,46 @@
+{% load static %}
+
+<style>
+    .buttonMenu {
+        background: url({% static 'img/buttonMenu.png' %}) no-repeat;
+    }
+    .buttonHelp {
+        background: url({% static 'img/buttonHelp.png' %}) no-repeat;
+    }
+    .buttonOptions {
+        background: url({% static 'img/buttonOptions.png' %}) no-repeat;
+    }
+    
+</style>
+
+<div>
+    <div class="flexboxLeft">
+        <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="{% url 'main' %}">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+    <span>
+        {% if user.is_authenticated %}
+            <span style="color: aliceblue;">{{ user.username }}</a></span>
+        {% endif %}
+    </span>
+    <span>
+        {% if user.is_authenticated %}
+            <span style="color: aliceblue;"><a href="{% url 'logout' %}">Logout</a></span>
+        {% endif %}
+    </span>
+    <span class="title">MovieGuessr</span>
+    
+    {% if daily_game is not None %}
+    <div class="flexbox2" >
+        <div class="title2">remaining guesses</div>
+        <div class="leftGuess">
+            <p class="try">{{ remaining }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
