@@ -13,8 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from re import template
+from django import views
 from django.contrib import admin
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.models import User
 from django.urls import path
 from django.http import HttpResponse
@@ -27,8 +30,10 @@ import json
 
 from datetime import datetime
 
+from . import views
+
 # This should probably be called in another file, should be refactored.
-from movieguessr.models import Movies, GamesOfTheDay, UserGames
+from movieguessr.models import Movies, Results
 
 @csrf_exempt
 def create_account(request):
@@ -62,10 +67,12 @@ def login_endpoint(request):
         return error(request)
 
 # What is going to be on the home page? account creation?
+'''
 @csrf_exempt
 def main(request):
-    return HttpResponse("Main")
-
+    return render(request, 'main.html')
+'''
+'''
 @csrf_exempt
 def game(request):
     userGame = find_game(request.user)
@@ -80,7 +87,7 @@ def game(request):
         return redirect("/gamelost/")
 
     return HttpResponse("Game is going, make a guess")
-
+'''
 @csrf_exempt
 def gameguess(request):
     userGame = find_game(request.user)
@@ -99,7 +106,7 @@ def gameguess(request):
 
     # We have loaded the game twice, theoretically could be next day now.
     dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
-    gameToday = GamesOfTheDay.objects.filter(date=dateTodayAsString).first()
+    gameToday = Movies.objects.first()
     body = json.loads(request.body)
     guess = body['guess']
     if guess.lower() == gameToday.movie.title.lower():
@@ -128,14 +135,14 @@ def error(request):
 
 def find_game(user_id):
     dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
-    gameToday = GamesOfTheDay.objects.filter(date=dateTodayAsString).first()
+    gameToday = Movies.objects.first()
     if gameToday is None:
         return None
     else:
-        userGame = UserGames.objects.filter(user=user_id, game=gameToday.id).first()
+        userGame = Results.objects.filter(user=user_id, game=gameToday.id).first()
 
     if userGame is None:
-        userGame = UserGames(user=user_id, game=gameToday)
+        userGame = Results(user=user_id, game=gameToday)
         userGame.save()
     # else: Well, it already exists, nothing to do...
 
@@ -145,10 +152,16 @@ urlpatterns = [
     path('create_account/', create_account),
     path('login/', login_endpoint),
     path('admin/', admin.site.urls),
-    path('', main), 
-    path('game/', game), # Game home page: Decide how this works with accounts.
+    path('', views.index, name="index"), 
+    path('game/', views.GameView.as_view(), name="game"), # Game home page: Decide how this works with accounts.
     path('gameguess/', gameguess),
     path('gamewon/', gamewon),
     path('gamelost/', gamelost),
-    path('error/', error)
+    path('error/', error),
+    path('test/', views.test, name="test"),
+
+    path('accounts/login', auth_views.LoginView.as_view(template_name="accounts/login.html"), name='login'),
+    path('accounts/logout', auth_views.LogoutView.as_view(), name="logout")
+
+    
 ]

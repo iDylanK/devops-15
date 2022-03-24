@@ -7,6 +7,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=movieguessr
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
 
   web:
     container_name: web_dev

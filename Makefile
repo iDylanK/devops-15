@@ -24,3 +24,7 @@ rm:
 rm-images:
 	docker ps -a -q | ( while read ID; do docker stop $$ID; done )
 	docker images -a -q | ( while read ID; do docker rmi -f $$ID; done )
+
+#manual commands
+compose-manage-py:
+	docker-compose run --rm $(options) web_dev python3 manage.py $(cmd)

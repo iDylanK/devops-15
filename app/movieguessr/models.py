@@ -4,23 +4,27 @@ from django.contrib.auth.models import User
 
 class Movies(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    image_url = models.URLField()
+    image_url = models.URLField(null=True)
     genres = models.CharField(max_length=100, null=True)
-    release_date = models.CharField(max_length=20)
+    release_date = models.CharField(max_length=20, null=True)
     actor = models.CharField(max_length=100)
-    character = models.CharField(max_length=200)
+    tagline = models.CharField(max_length=200, null=True)
     summary = models.TextField(null=True)
 
-class GamesOfTheDay(models.Model):
-    date = models.DateField('game date')
-    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
 
-class UserGames(models.Model):
+
+class Results(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    game = models.ForeignKey(GamesOfTheDay, on_delete=models.CASCADE)
-
+    movie = models.CharField(max_length=200)
     tries = models.PositiveSmallIntegerField(default=0)
     score = models.PositiveSmallIntegerField(default=0)
+    total_score = models.PositiveBigIntegerField(default=0)
+    game_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.user}, {self.movie}'
 
 # Test script:
 # python3 manage.py shell

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style3.css">
+    <title>MovieGuessr</title>
+    <style>
+        table {
+          width:100%;
+        }
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 15px;
+          text-align: left;
+        }
+        table#t01 tr:nth-child(even) {
+          background-color: #eee;
+        }
+        table#t01 tr:nth-child(odd) {
+         background-color: #fff;
+        }
+        table#t01 th {
+          background-color: black;
+          color: white;
+        }
+        </style>
+
+</head>
+
+<body>
+
+
+
+
+    <!--buttons
+    <div class="baseStyle">
+        <p>MovieGuessr</p>
+    </div>
+    <div class="base2Style">
+        <p class="parStyle"> sample text summary sample text summary sample text summary 
+            sample text summary sample text summary sample 
+            text summary sample text summary sample text summary sample 
+            text summary sample text summary sample text summary </p>
+    </div>
+   -->
+
+
+
+    <div class="background">
+
+
+        <div class="flexbox">
+
+ 
+            <div class="flexboxLeft">
+            <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button onclick="menuDrop()" class="dropdown button dropbtn buttonHelp"></button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#help">Help</a>
+
+            </div>
+            <button onclick="menuDrop()" class="dropdown button dropbtn buttonOptions"></button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#op1">option1</a>
+                <a href="#op2">option2</a>
+                <a href="#op3">option3</a>
+            </div>
+            </div>
+            <div class="title">MovieGuessr</div>
+
+            <div class="flexboxRight">
+            <div class="title2">Remaining Guesses</div>
+            <div class="leftGuess">6</div>
+            </div>
+
+        </div>
+        <!--
+        <div class="imageC">
+            <div class="imageBox"></div>
+        </div>
+        -->
+
+        <table id="t01">
+
+            <tr>
+              <th>User</th>
+              <th>Movie</th>
+              <th># Tries</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Total Score</th>
+            </tr>
+          
+            {% for item in scores %}
+          
+            <tr>
+          
+              <td>{{ item.user }}</td>
+              <td>{{ item.movie }}</td>
+              <td>{{ item.tries }}</td>
+              <td>{{ item.score }}</td>
+              <td>{{ item.game_date }}</td>
+              <td>{{ item.total_score }}</td>
+            </tr>
+          {% endfor %}
+          </table>
+          <br>
+
+
+
+        <div class="hintStyle">
+            <p class="textHint">
+                hint 1: random hint text here - random hint text here
+            </p>
+            <p class="textHint">
+                hint 2: random hint text here - random hint text here
+            </p>
+            <p class="textHint">
+                hint 3: random hint text here - random hint text here
+            </p>
+            <p class="textHint">
+                hint 4: random hint text here - random hint text here
+            </p>
+        </div>
+
+        <div class="hintStyle">
+            <p class="textHint">
+                Summary: random summary text here - random summary text here
+                - random summary text here - random summary text here
+                - random summary text here - random summary text here
+            </p>
+
+        </div>
+
+        <form class="textIn">
+            <br>
+            <label for="fname">Movie Title:</label>
+            <input type="text" id="fname" name="fname" class="textField">
+            <br><br>
+
+        </form>
+
+    </div>
+
+
+    <script>
+        function menuDrop() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        function showPopup() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+    </script>
+
+</body>
+
+</html>
