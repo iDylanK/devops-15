@@ -1,5 +1,17 @@
 <div>
-    <span><a href="{% url 'index' %}">Back</a></span>
+    <span>
+        {% if user.is_authenticated %}
+            <span><a href="{% url 'index' %}">Back</a></span>
+        {% endif %}
+    </span>
+    <div class="flexboxLeft">
+        <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
     <span>
         {% if user.is_authenticated %}
             <span style="color: aliceblue;">{{ user.username }}</a></span>
@@ -8,17 +20,7 @@
     <span>
         {% if user.is_authenticated %}
             <span style="color: aliceblue;"><a href="{% url 'logout' %}">Logout</a></span>
-        {% else %}
-            <span style="color: aliceblue;"><a href="{% url 'login' %}">Login</a></span>
         {% endif %}
     </span>
     <span class="title">MovieGuessr</span>
-     
-    <span style="float: right;">
-        <button onclick="menuDrop()" class="dropdown button dropbtn buttonHelp"></button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="#help">Help</a>
-
-        </div>
-    </span>
 </div>

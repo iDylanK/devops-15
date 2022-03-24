@@ -42,10 +42,10 @@ def calculateScore(totalTries, tries, scoreMultiplier):
     
     return (totalTries - tries) * scoreMultiplier
 
-def calculateTotalScore(user, score):
+def calculateTotalScore(user_id, score):
     #retrieve last game from Results for the user
     #total = user.games_set.order_by('id')[0]
-    previousTotalScore = Results.objects.filter(user=user).order_by('-game_date').first().total_score
+    previousTotalScore = Results.objects.filter(user=user_id).order_by('-game_date').first().total_score
     return previousTotalScore + score
 
 def getCurrentUserScores(request):
@@ -56,7 +56,7 @@ def getCurrentUserScores(request):
 
 def saveResults(user, movie, tries, score, totalScore):
 
-    game = Results(user=user.pk, movie=movie, 
+    game = Results(user_id=user.pk, movie=movie, 
                  tries=tries, score=score, total_score=totalScore)
     game.save()
 

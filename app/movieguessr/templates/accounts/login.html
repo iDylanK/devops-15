@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style3.css">
     <title>{% block title %}Login{% endblock %}</title>
 </head>
-<body>
+<body class="background">
+    {% include 'navbar.html' %}
     <main>
         {%block content%}
         <h1>Login</h1>

@@ -5,31 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style3.css">
+    <link rel="stylesheet" href="style3.css">
     <title>MovieGuessr</title>
-    <style>
-        table {
-          width:100%;
-        }
-        table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-        }
-        th, td {
-          padding: 15px;
-          text-align: left;
-        }
-        table#t01 tr:nth-child(even) {
-          background-color: #eee;
-        }
-        table#t01 tr:nth-child(odd) {
-         background-color: #fff;
-        }
-        table#t01 th {
-          background-color: black;
-          color: white;
-        }
-        </style>
+
 
 </head>
 
@@ -53,12 +31,45 @@
 
 
     <div class="background">
-
-
         <div class="flexbox">
 
- 
-            <div class="flexboxLeft">
+            <div style="padding: 10px;">
+                <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="Home.html">Home</a>
+                    <a href="#about">Logout</a>
+                </div>
+            </div>
+
+
+            <div class="dropdown2 button dropbtn buttonHelp">
+
+                <div class="dropdown2-content">
+                    <p class="textHint">
+                        - rule 1 : random text here<br>
+                        - rule 1 : random text here<br>
+                        - rule 1 : random text here
+                        - rule 1 : random text here<br>
+                        - rule 1 : random text here
+                        - rule 1 : random text here<br>
+                        - rule 1 : random text here
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="title">MovieGuessr</div>
+
+            <div class="flexbox2" >
+                <div class="title2">remaining guesses</div>
+                <div class="leftGuess">
+                    <p class="try">0</p>
+                </div>
+            </div>
+
+            
+
+            <!--
             <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
             <div id="myDropdown" class="dropdown-content">
                 <a href="#home">Home</a>
@@ -76,48 +87,51 @@
                 <a href="#op2">option2</a>
                 <a href="#op3">option3</a>
             </div>
+            -->
+
+            <!--
+            <div style="padding: 10px;">
+                <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="Home.html">Home</a>
+                    <a href="#about">Logout</a>
+                </div>
+
+                <div class="dropdown2 button dropbtn buttonHelp">
+
+                    <div class="dropdown2-content">
+                        <p class="textHint">
+                            - rule 1 : random text here<br>
+                            - rule 1 : random text here<br>
+                            - rule 1 : random text here
+                            - rule 1 : random text here<br>
+                            - rule 1 : random text here
+                            - rule 1 : random text here<br>
+                            - rule 1 : random text here
+                        </p>
+                    </div>
+                </div>
+
+
+
             </div>
+
+
             <div class="title">MovieGuessr</div>
 
-            <div class="flexboxRight">
-            <div class="title2">Remaining Guesses</div>
-            <div class="leftGuess">6</div>
+
+            <div class="flexbox2">
+                <div class="title2">remaining guesses</div>
+                <div class="leftGuess">
+                    <p class="try">0</p>
+                </div>
             </div>
 
-        </div>
-        <!--
-        <div class="imageC">
-            <div class="imageBox"></div>
-        </div>
         -->
-
-        <table id="t01">
-
-            <tr>
-              <th>User</th>
-              <th>Movie</th>
-              <th># Tries</th>
-              <th>Score</th>
-              <th>Date</th>
-              <th>Total Score</th>
-            </tr>
-          
-            {% for item in scores %}
-          
-            <tr>
-          
-              <td>{{ item.user }}</td>
-              <td>{{ item.movie }}</td>
-              <td>{{ item.tries }}</td>
-              <td>{{ item.score }}</td>
-              <td>{{ item.game_date }}</td>
-              <td>{{ item.total_score }}</td>
-            </tr>
-          {% endfor %}
-          </table>
-          <br>
+        </div>
 
 
+        <div class="imageBox"></div>
 
         <div class="hintStyle">
             <p class="textHint">
@@ -143,6 +157,7 @@
 
         </div>
 
+
         <form class="textIn">
             <br>
             <label for="fname">Movie Title:</label>
@@ -153,7 +168,7 @@
 
     </div>
 
-
+    <!--
     <script>
         function menuDrop() {
             document.getElementById("myDropdown").classList.toggle("show");
@@ -171,13 +186,16 @@
             }
         }
     </script>
-
+-->
+    <script src="menuDrop.js"></script>
     <script>
         function showPopup() {
             var popup = document.getElementById("myPopup");
             popup.classList.toggle("show");
         }
     </script>
+
+
 
 </body>
 
