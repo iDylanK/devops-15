@@ -1,3 +1,26 @@
 <div>
-    Home | Game | etc...
+    <span>
+        {% if user.is_authenticated %}
+            <span><a href="{% url 'main' %}">Back</a></span>
+        {% endif %}
+    </span>
+    <div class="flexboxLeft">
+        <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="{% url 'main' %}">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+    <span>
+        {% if user.is_authenticated %}
+            <span style="color: aliceblue;">{{ user.username }}</a></span>
+        {% endif %}
+    </span>
+    <span>
+        {% if user.is_authenticated %}
+            <span style="color: aliceblue;"><a href="{% url 'logout' %}">Logout</a></span>
+        {% endif %}
+    </span>
+    <span class="title">MovieGuessr</span>
 </div>

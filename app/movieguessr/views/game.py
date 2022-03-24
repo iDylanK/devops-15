@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 import json
 
 # This should probably be called in another file, should be refactored.
-from movieguessr.models import Movies, GamesOfTheDay, UserGames
+from movieguessr.models import Game, Movie, UserGame
     
 
 def game(request):
@@ -41,7 +41,7 @@ def gameguess(request):
 
     # We have loaded the game twice, theoretically could be next day now.
     dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
-    gameToday = GamesOfTheDay.objects.filter(date=dateTodayAsString).first()
+    gameToday = Game.objects.filter(date=dateTodayAsString).first()
     body = json.loads(request.body)
     guess = body['guess']
     if guess.lower() == gameToday.movie.title.lower():
@@ -64,14 +64,14 @@ def gamelost(request):
 
 def find_game(user_id):
     dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
-    gameToday = GamesOfTheDay.objects.filter(date=dateTodayAsString).first()
+    gameToday = Game.objects.filter(date=dateTodayAsString).first()
     if gameToday is None:
         return None
     else:
-        userGame = UserGames.objects.filter(user=user_id, game=gameToday.id).first()
+        userGame = UserGame.objects.filter(user=user_id, game=gameToday.id).first()
 
     if userGame is None:
-        userGame = UserGames(user=user_id, game=gameToday)
+        userGame = UserGame(user=user_id, game=gameToday)
         userGame.save()
     # else: Well, it already exists, nothing to do...
 

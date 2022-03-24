@@ -19,11 +19,15 @@ from django.conf.urls import include
 from . import views
 
 urlpatterns = [
-    path('', views.main, name='main'), 
-    path('accounts/logout/', views.logout),
+    path('', views.main, name='main'),
+
+    path('accounts/logout/', views.logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register', views.register),
-    path('accounts/profile', views.profile),
+    path('accounts/register', views.register, name='register'),
+    path('accounts/profile/', views.profile),
+
+    path('leaderboard/', views.leaderboard, name='leaderboard'),
+
     path('game/', views.game, name='game'), # Game home page: Decide how this works with accounts.
     path('gameguess/', views.gameguess),
     path('gamewon/', views.gamewon),
