@@ -49,15 +49,6 @@ body {
     background-color: rgb(112, 112, 112);
     border-radius: 20px;
 }
-.buttonMenu {
-    background: url(buttonMenu.png) no-repeat;
-}
-.buttonHelp {
-    background: url(buttonHelp.png) no-repeat;
-}
-.buttonOptions {
-    background: url(buttonOptions.png) no-repeat;
-}
 
 .title {
     font-size: 50px;

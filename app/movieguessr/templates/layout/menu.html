@@ -1,3 +1,18 @@
+{% load static %}
+
+<style>
+    .buttonMenu {
+        background: url({% static 'img/buttonMenu.png' %}) no-repeat;
+    }
+    .buttonHelp {
+        background: url({% static 'img/buttonHelp.png' %}) no-repeat;
+    }
+    .buttonOptions {
+        background: url({% static 'img/buttonOptions.png' %}) no-repeat;
+    }
+    
+</style>
+
 <div>
     <span>
         {% if user.is_authenticated %}
