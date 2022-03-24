@@ -23,16 +23,6 @@ class GameView(LoginRequiredMixin, TemplateView):
     template_name = 'game.html'
 
 
-def callAPI(key, movieID):
-    query = 'https://api.themoviedb.org/3/movie/' + movieID + \
-    '?api_key=' + key + '&language=en-US'
-    response = requests.get(query)
-    if response.status_code == 200:
-        data = response.json()
-        return data
-    else:
-        return "Unsuccessful API call"
-
 def retrieveMovieOfTheDay():
     # get the first row from the Movies table
     return  Movies.objects.first()
