@@ -1,6 +1,6 @@
 [
   {
-    "model": "movieguessr.movies",
+    "model": "movieguessr.movie",
     "pk": 1,
     "fields": {
       "title": "Fight Club",
@@ -13,7 +13,7 @@
     }
   },
   {
-    "model": "movieguessr.gamesoftheday",
+    "model": "movieguessr.game",
     "pk": 1,
     "fields": {
       "movie": 1,
