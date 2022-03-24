@@ -23,9 +23,9 @@ urlpatterns = [
 
     path('accounts/logout/', views.logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register', views.register, name='register'),
+    path('accounts/register/', views.register, name='register'),
     path('accounts/profile/', views.profile),
-    path('accounts/games/delete', views.games_delete, name="games_delete"), # Testing only..
+    path('accounts/games/delete/', views.games_delete, name="games_delete"), # Testing only..
 
     path('leaderboard/', views.leaderboard, name='leaderboard'),
 
