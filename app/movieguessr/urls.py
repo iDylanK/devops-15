@@ -20,6 +20,7 @@ from . import views
 
 urlpatterns = [
     path('', views.main, name='main'), 
+    path('accounts/logout/', views.logout),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register', views.register),
     path('accounts/profile', views.profile),

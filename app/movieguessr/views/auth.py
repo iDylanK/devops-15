@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout as dlogout
 import json
 
 # def register(request):
@@ -21,4 +22,8 @@ def register(request):
     return render(request, 'registration/register.html', {'form': f})
 
 def profile(request):
+    return redirect('main')
+
+def logout(request):
+    dlogout(request)
     return redirect('main')
