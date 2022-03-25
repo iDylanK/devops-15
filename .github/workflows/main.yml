@@ -34,7 +34,7 @@ jobs:
   push:
     runs-on: ubuntu-latest
     needs: django-tests  
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         name: Checkout repo
@@ -49,7 +49,7 @@ jobs:
   deploy: 
     runs-on: ubuntu-latest
     needs: push
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         name: Checkout repo
@@ -66,5 +66,4 @@ jobs:
           export AWS_DEFAULT_REGION=eu-west-2 &&
           ecs-cli compose --file docker-compose.prod.yml --project-name movieguessr service stop --cluster MovieGuessrCluster &&
           ecs-cli compose --file docker-compose.prod.yml --ecs-params ecs-param.yml --project-name movieguessr service up --cluster MovieGuessrCluster &&
-          ecs-cli compose --file docker-compose.prod.yml --project-name movieguessr service scale 2 --cluster MovieGuessrCluster
       

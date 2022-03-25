@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 
 
 # Application definition
@@ -152,6 +152,7 @@ if S3:
 
     AWS_ACCESS_KEY_ID = data['AccessKeyId']
     AWS_SECRET_ACCESS_KEY = data['SecretAccessKey']
+    AWS_SESSION_TOKEN = data['Token']
 
     AWS_S3_REGION_NAME = 'eu-west-2'
     AWS_STORAGE_BUCKET_NAME = 'movieguessr'
