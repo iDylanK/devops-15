@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import requests
 import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -144,16 +143,6 @@ S3 = os.getenv('S3', 'False') == 'True' or os.getenv('S3', 'False') == 'TRUE'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "movieguessr/static")]
 
 if S3:
-    # Get the AWS ID and Secret by making a request to AWS_CONTAINER_CREDENTIALS_RELATIVE_URI env value.
-    # This is set by the ECS. 
-    relative_url = os.getenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI', "/")
-    url = f'http://169.254.170.2{relative_url}'
-    data = json.loads(requests.get(url).text)
-
-    AWS_ACCESS_KEY_ID = data['AccessKeyId']
-    AWS_SECRET_ACCESS_KEY = data['SecretAccessKey']
-    AWS_SESSION_TOKEN = data['Token']
-
     AWS_S3_REGION_NAME = 'eu-west-2'
     AWS_STORAGE_BUCKET_NAME = 'movieguessr'
     AWS_DEFAULT_ACL = 'public-read'
