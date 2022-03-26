@@ -1,15 +1,16 @@
-from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
 # This should probably be called in another file, should be refactored.
-from movieguessr.models import Game, Movie, UserGame
-    
+from movieguessr.models import Game, UserGame
+
+allowed_tries = 6
+score_multiplier = 100
 
 def game(request):
     # TODO: auth check DRY code.. middleware?
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -27,8 +28,9 @@ def game(request):
     return render(request, "game/daily.html", {'daily_game': daily_game, 'guesses': guesses, 'remaining': 6-guesses})
 
 def game_guess(request):
+
     # TODO: auth check DRY code.. middleware?
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -44,7 +46,7 @@ def game_guess(request):
 
     guess = request.POST.get('guess', '')
     if guess.lower().replace(" ", "") == daily_game.movie.title.lower().replace(" ", ""):
-        user_game.score = user_game.tries + 1
+        user_game.score = (allowed_tries - user_game.tries) * score_multiplier
         user_game.save(update_fields=['score'])
         return redirect("game_won")
     else: 
@@ -56,7 +58,7 @@ def game_guess(request):
     return redirect("game")
 
 def game_won(request):
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -67,11 +69,11 @@ def game_won(request):
     if user_game.score == 0:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, f'Game won with score: {user_game.score} !') 
+    messages.add_message(request, messages.INFO, f'Game won in {user_game.tries + 1} guess(es). Score: {user_game.score} !') 
     return redirect("main")
 
 def game_lost(request):
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -82,21 +84,20 @@ def game_lost(request):
     if user_game.tries < 6:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, 'Game Lost!')
+    messages.add_message(request, messages.INFO, f'You have used all {allowed_tries} guesses unsuccessfully. Game Lost.  Score: 0.')
     return redirect("main")
 
 def games_delete(request):
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     UserGame.objects.all().delete()
     return redirect("main")
 
 def find_game(user_id):
-    dateTodayAsString = datetime.today().strftime('%Y-%m-%d')
     # TODO: today game..
     # gameToday = Game.objects.filter(date=dateTodayAsString).first()
-    daily_game = Game.objects.first()
+    daily_game = Game.objects.last() #get(date=datetime.today().strftime('%Y-%m-%d'))
     if daily_game is None:
         return None
     else:
@@ -111,7 +112,7 @@ def find_game(user_id):
 
 def game_played(request, user_game):
     if user_game.score > 0: # Meaning the game has already been played... What do we do? Redirect?
-        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score}')
+        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score} points')
         return True
 
     if user_game.tries > 5: # Meaning the game has already been played... What do we do? Redirect?

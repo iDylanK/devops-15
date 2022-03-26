@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <form method="POST" action="{% url 'search' %}" class="textIn">
+        {% csrf_token %}
+
+
+        <div class="input-group input-group-lg w-25">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
+            </div>
+            <input type="text" id="search" name="search" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
+
+    </form><br>
+</div>

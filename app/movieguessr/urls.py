@@ -17,6 +17,7 @@ from django.urls import path
 from django.http import HttpResponse
 from django.conf.urls import include
 from . import views
+from django.contrib import admin
 
 urlpatterns = [
     path('', views.main, name='main'),
@@ -26,11 +27,15 @@ urlpatterns = [
     path('accounts/register/', views.register, name='register'),
     path('accounts/profile/', views.profile),
     path('accounts/games/delete/', views.games_delete, name="games_delete"), # Testing only..
+    path('accounts/movies/add/', views.add_movies, name="add_movies"),
 
     path('leaderboard/', views.leaderboard, name='leaderboard'),
+    path('leaderboard/search', views.search_movie_scores, name='search'),
 
     path('game/', views.game, name='game'), # Game home page: Decide how this works with accounts.
     path('game/guess/', views.game_guess, name="guess"),
     path('game/won/', views.game_won, name="game_won"),
     path('game/lost/', views.game_lost, name="game_lost"),
+
+    path('admin/', admin.site.urls),
 ]

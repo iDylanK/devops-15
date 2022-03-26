@@ -2,10 +2,6 @@
 
 {% block content %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
 {% if next %}
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
@@ -19,24 +15,26 @@
 <p>Already authenticated</p>
 {% else %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+<div class="d-flex justify-content-center">
+    <div class="col-3">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        
+        {% load crispy_forms_tags %}
+        {{ form|crispy}}
+        
+        <div class="row d-flex justify-content-center">
+            <input type="submit" class="btn btn-info w-25" value="login">
+            <input type="hidden" name="next" value="{{ next }}">
+        </div>
+        
 
-<input type="submit" value="login">
-<input type="hidden" name="next" value="{{ next }}">
-</form>
-
-<a href='{% url 'register' %}'>Register </a>
+        <div class="row d-flex justify-content-center mt-2" >
+            <a href='{% url 'register' %}'>Or create a new account! </a>
+        </div>
+    </form>
+    </div>
+</div>
 
 {% endif %}
 

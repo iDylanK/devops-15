@@ -1,4 +1,5 @@
 {% extends "layout/base.html" %}
+ 
 
 {% block content %}
 
@@ -6,13 +7,14 @@
 
 {% include 'leaderboard/search.html' %}
 
-<h1>Total Score Leaderboard</h1><br>
-{% load django_tables2 %} 
-{% render_table scores %}
+<h1>{{ movie }} Leaderboard</h1><br>
+{% load django_tables2 %}
+{% render_table table %}
 
 {% else %}
 
 Authenticate - Possibly better using a Auth Middleware....
+
 
 {% endif %}
 
