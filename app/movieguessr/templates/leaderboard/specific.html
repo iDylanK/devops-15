@@ -5,16 +5,9 @@
 
 {% if user.is_authenticated %}
 
-<form method="POST" action="{% url 'search' %}" class="textIn">
-    {% csrf_token %}
-    <br>
-    <label for="fname">Search:</label>
-    <input type="text" id="search" name="search" class="">
-    <br><br>
+{% include 'leaderboard/search.html' %}
 
-</form><br>
-
-{{ movie }} Leaderboard<br>
+<h1>{{ movie }} Leaderboard</h1><br>
 {% load django_tables2 %}
 {% render_table table %}
 

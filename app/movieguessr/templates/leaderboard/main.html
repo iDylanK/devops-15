@@ -1,43 +1,12 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-<!--
-<div>
-    Leaderboard
-</div>
 
-<div class="mt-4 text-white">
-    <table>
-        <tr>
-            <th></th>
-            <th class="p-4 text-white">User</th>
-            <th class="p-4 text-white">Score</th>
-        </tr>
-        {% for user in users %}
-        <tr> 
-            <td class="p-4 text-white">{{ forloop.counter }}</td>
-            <td class="p-4 text-white">
-                {{ user }}
-            </td>
-            <td class="p-4 text-white">
-                {{ user.total_score }}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>-->
 {% if user.is_authenticated %}
 
-<form method="POST" action="{% url 'search' %}" class="textIn">
-    {% csrf_token %}
-    <br>
-    <label for="fname">Search:</label>
-    <input type="text" id="search" name="search" class="">
-    <br><br>
+{% include 'leaderboard/search.html' %}
 
-</form><br>
-
-Total Score Leaderboard<br>
+<h1>Total Score Leaderboard</h1><br>
 {% load django_tables2 %} 
 {% render_table scores %}
 

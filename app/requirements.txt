@@ -5,3 +5,4 @@ django-storages
 boto3
 requests
 django-tables2>=2.4.1
+django-crispy-forms
