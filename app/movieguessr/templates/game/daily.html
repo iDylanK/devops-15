@@ -11,31 +11,31 @@
 <div class="hintStyle">
     {% if guesses >= 1 %}
     <p class="textHint">
-        hint 1: {{ daily_game.movie.tagline }}
+        Quote: {{ daily_game.movie.tagline }}
     </p>
     {% endif %}
 
     {% if guesses >= 2 %}
     <p class="textHint">
-        hint 2: {{ daily_game.movie.genres }}
+        Genres: {{ daily_game.movie.genres }}
     </p>
     {% endif %}
 
     {% if guesses >= 3 %}
     <p class="textHint">
-        hint 3: {{ daily_game.movie.character }}
+        Actor: {{ daily_game.movie.actor }}
     </p>
     {% endif %}
 
     {% if guesses >= 4 %}
     <p class="textHint">
-        hint 4: {{ daily_game.movie.actor }}
+        Character: {{ daily_game.movie.character }}
     </p>
     {% endif %}
 
     {% if guesses >= 5 %}
     <p class="textHint">
-        hint 5:<br> {{ daily_game.movie.summary }}
+        Summary: {{ daily_game.movie.summary }}
     </p>
     {% endif %}
 
