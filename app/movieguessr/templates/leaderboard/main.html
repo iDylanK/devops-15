@@ -1,7 +1,7 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-
+<!--
 <div>
     Leaderboard
 </div>
@@ -25,9 +25,9 @@
         </tr>
         {% endfor %}
     </table>
-</div>
+</div>-->
+{% if user.is_authenticated %}
 
-<<<<<<< HEAD
 <form method="POST" action="{% url 'search' %}" class="textIn">
     {% csrf_token %}
     <br>
@@ -39,15 +39,12 @@
 
 Total Score Leaderboard<br>
 {% load django_tables2 %} 
-{% render_table table %}
+{% render_table scores %}
 
 {% else %}
 
 Authenticate - Possibly better using a Auth Middleware....
 
-
 {% endif %}
-=======
->>>>>>> 03449e5802a422dde7c93239bf182f3e338b727f
 
 {% endblock %}

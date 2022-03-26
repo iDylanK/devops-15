@@ -63,9 +63,9 @@ class PreviousTotalScoreTestCase(TestCase):
         game1 = Game(movie=movie1, date=date.strftime('%Y-%m-%d'))
         game1.save()
         # add 2 results of score 600 and 400
-        results = UserGame(user=user, game = game, tries=1, score=600)
+        results = UserGame(user=user, game = game, tries=1, score=600, total_score=1000)
         results.save()
-        results1 = UserGame(user=user, game = game1, tries=2, score=400)
+        results1 = UserGame(user=user, game = game1, tries=3, score=400, total_score=400)
         results1.save()
 
     def test_previous_total_score(self):

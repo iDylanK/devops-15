@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from ..models.game import Game
 import django_tables2 as tables
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class SimpleTable(tables.Table):
@@ -35,8 +36,10 @@ def leaderboard(request):
 
     # Sort the leaderboard
     users_sorted = sorted(list(users), key=lambda x: x.total_score, reverse=True)
-    table = SimpleTable(users_sorted)
-    return render(request, "leaderboard/main.html", {'table': table})
+    last_game = Game.objects.order_by('-id').first()
+    scores = UserGame.objects.filter(game = last_game).order_by('-total_score')
+    scoretable = SimpleTable(scores)
+    return render(request, "leaderboard/main.html", {'scores': scoretable})
 
 
 def searchMovieScores(request):
