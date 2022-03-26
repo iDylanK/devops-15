@@ -124,7 +124,7 @@ def find_game(user_id):
 
 def game_played(request, user_game):
     if user_game.score > 0: # Meaning the game has already been played... What do we do? Redirect?
-        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score}')
+        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score} points')
         return True
 
     if user_game.tries > 5: # Meaning the game has already been played... What do we do? Redirect?
