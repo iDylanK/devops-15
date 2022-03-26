@@ -30,7 +30,7 @@ urlpatterns = [
     path('accounts/movies/add/', views.add_movies, name="add_movies"),
 
     path('leaderboard/', views.leaderboard, name='leaderboard'),
-    path('leaderboard/search', views.searchMovieScores, name='search'),
+    path('leaderboard/search', views.search_movie_scores, name='search'),
 
     path('game/', views.game, name='game'), # Game home page: Decide how this works with accounts.
     path('game/guess/', views.game_guess, name="guess"),

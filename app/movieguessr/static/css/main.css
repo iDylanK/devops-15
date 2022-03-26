@@ -52,12 +52,6 @@ body {
 
 .title {
     font-size: 50px;
-    position: relative;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    margin-top: 0px; /* Negative half of height. */
-    margin-left: -280px; /* Negative half of width. */
     z-index: 3;
     color: aliceblue;
     font-weight: 60;

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from time import time
 from django.test import TestCase
-from ..models import Movie, UserGame, Game
+from movieguessr.models import Game, Movie, UserGame
 from django.contrib.auth.models import User
 from django.db.models import Sum
 
@@ -63,18 +63,16 @@ class PreviousTotalScoreTestCase(TestCase):
         game1 = Game(movie=movie1, date=date.strftime('%Y-%m-%d'))
         game1.save()
         # add 2 results of score 600 and 400
-        results = UserGame(user=user, game = game, tries=1, score=600, total_score=1000)
+        results = UserGame(user=user, game = game, tries=1, score=600)
         results.save()
-        results1 = UserGame(user=user, game = game1, tries=3, score=400, total_score=400)
+        results1 = UserGame(user=user, game = game1, tries=3, score=200)
         results1.save()
 
     def test_previous_total_score(self):
         # get the User primary key
         user = User.objects.get(username="Bilbo").id
         # get total score for that user
-        previousTotalScore = UserGame.objects.filter(user=user).order_by('-game__date')[1].total_score
         
         totalscore = UserGame.objects.filter(user=user).aggregate(Sum('score'))['score__sum']
         # should be equal to 1000
-        self.assertEqual(totalscore, 1000)
-        self.assertEqual(previousTotalScore, 400)
+        self.assertEqual(totalscore, 800)

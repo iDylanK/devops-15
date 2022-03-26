@@ -13,18 +13,28 @@
     
 </style>
 
-<div>
-    <div class="flexboxLeft">
+<div class="row p-4">
+
+    <div class="col-4">
+        {% if user.is_authenticated %}
+
         <button onclick="menuDrop()" class="dropdown button dropbtn buttonMenu"></button>
         <div id="myDropdown" class="dropdown-content">
             <a href="{% url 'main' %}">Home</a>
             <a href="{% url 'leaderboard' %}">Scores</a>
             <a href="{% url 'logout' %}">Logout</a>
         </div>
-        <span class="title">MovieGuessr</span>
+        <span style="text-white">{{ user.username }}</a></span>
+
+        {% endif %}
+    </div>
+
+    <div class="col-4 d-flex justify-content-center title">MovieGuessr</div>
+
+    <div class="col-4 d-flex justify-content-end" >
         {% if daily_game is not None %}
-        <div class="flexbox2" >
-            <div class="title2">Remaining Guesses</div>
+            <div class="title2 align-self-center"> Remaining Guesses</div>
+            
             {% if remaining > 4 %}
             <div class="leftGuessGreen">
                 <p class="green">{{ remaining }}</p>
@@ -42,20 +52,6 @@
                 <p class="yellow">{{ remaining }}</p>
             </div>
             {% endif %}
-        </div>
         {% endif %}
     </div>
-    <!--
-    <span>
-        {% if user.is_authenticated %}
-            <span style="color: aliceblue;">{{ user.username }}</a></span>
-        {% endif %}
-    </span>
-    
-    <span>
-        {% if user.is_authenticated %}
-            <span style="color: aliceblue;"><a href="{% url 'logout' %}">Logout</a></span>
-        {% endif %}
-    </span>
-    -->
 </div>

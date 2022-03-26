@@ -1,11 +1,12 @@
-from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
 # This should probably be called in another file, should be refactored.
-from movieguessr.models import Game, Movie, UserGame
-    
+from movieguessr.models import Game, UserGame
+
+allowed_tries = 6
+score_multiplier = 100
 
 def game(request):
     # TODO: auth check DRY code.. middleware?
@@ -28,9 +29,6 @@ def game(request):
 
 def game_guess(request):
 
-    allowed_tries = 6
-    score_multiplier = 100
-
     # TODO: auth check DRY code.. middleware?
     if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
@@ -47,24 +45,14 @@ def game_guess(request):
         return redirect("main")
 
     guess = request.POST.get('guess', '')
-    user_game.tries = user_game.tries + 1
-    user_game.save(update_fields=['tries'])
-    try:
-        previousTotalScore = UserGame.objects.filter(user=request.user).order_by('-game__date')[1].total_score
-    except:
-        previousTotalScore = 0
     if guess.lower().replace(" ", "") == daily_game.movie.title.lower().replace(" ", ""):
-        user_game.score = (allowed_tries - user_game.tries + 1) * score_multiplier
+        user_game.score = (allowed_tries - user_game.tries) * score_multiplier
         user_game.save(update_fields=['score'])
-
-        user_game.total_score = previousTotalScore + user_game.score
-        user_game.save(update_fields=['total_score'])
         return redirect("game_won")
     else: 
+        user_game.tries = user_game.tries + 1
+        user_game.save(update_fields=['tries'])
         if user_game.tries > 5:
-            user_game.score = 0
-            user_game.total_score = previousTotalScore
-            user_game.save(update_fields=['score'])
             return redirect("game_lost")
 
     return redirect("game")
@@ -81,7 +69,7 @@ def game_won(request):
     if user_game.score == 0:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, f'Game won in {user_game.tries} guesses. Score: {user_game.score} !') 
+    messages.add_message(request, messages.INFO, f'Game won in {user_game.tries + 1} guess(es). Score: {user_game.score} !') 
     return redirect("main")
 
 def game_lost(request):
@@ -96,7 +84,7 @@ def game_lost(request):
     if user_game.tries < 6:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, f'You have used all {user_game.tries} guesses unsuccessfully. Game Lost.  Score: {user_game.score} .')
+    messages.add_message(request, messages.INFO, f'You have used all {allowed_tries} guesses unsuccessfully. Game Lost.  Score: 0.')
     return redirect("main")
 
 def games_delete(request):
