@@ -9,7 +9,7 @@ from movieguessr.models import Game, Movie, UserGame
 
 def game(request):
     # TODO: auth check DRY code.. middleware?
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -28,7 +28,7 @@ def game(request):
 
 def game_guess(request):
     # TODO: auth check DRY code.. middleware?
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -56,7 +56,7 @@ def game_guess(request):
     return redirect("game")
 
 def game_won(request):
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -71,7 +71,7 @@ def game_won(request):
     return redirect("main")
 
 def game_lost(request):
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     # TODO: game check DRY code.. middleware?
@@ -86,7 +86,7 @@ def game_lost(request):
     return redirect("main")
 
 def games_delete(request):
-    if request.user is None:
+    if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
     UserGame.objects.all().delete()
