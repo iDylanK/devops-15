@@ -44,7 +44,7 @@ def game_guess(request):
 
     guess = request.POST.get('guess', '')
     if guess.lower().replace(" ", "") == daily_game.movie.title.lower().replace(" ", ""):
-        user_game.score = user_game.tries + 1
+        user_game.score = 6 - user_game.tries 
         user_game.save(update_fields=['score'])
         return redirect("game_won")
     else: 
@@ -67,7 +67,7 @@ def game_won(request):
     if user_game.score == 0:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, f'Game won with score: {user_game.score} !') 
+    messages.add_message(request, messages.INFO, f'Game won with score: {user_game.score} points!') 
     return redirect("main")
 
 def game_lost(request):
@@ -111,7 +111,7 @@ def find_game(user_id):
 
 def game_played(request, user_game):
     if user_game.score > 0: # Meaning the game has already been played... What do we do? Redirect?
-        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score}')
+        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score} points')
         return True
 
     if user_game.tries > 5: # Meaning the game has already been played... What do we do? Redirect?
