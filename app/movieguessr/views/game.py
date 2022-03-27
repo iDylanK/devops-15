@@ -48,7 +48,7 @@ def game_guess(request):
     user_game.save(update_fields=['tries'])
 
     guess = request.POST.get('guess', '')
-    if guess.lower().replace(" ", "") == daily_game.movie.title.lower().replace(" ", ""):
+    if "".join(guess.lower().split()) == "".join(daily_game.movie.title.lower().split()):
         user_game.score = (allowed_tries - user_game.tries + 1) * score_multiplier
         user_game.save(update_fields=['score'])
         return redirect("game_won")
