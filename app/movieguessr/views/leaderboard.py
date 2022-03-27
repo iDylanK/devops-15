@@ -43,6 +43,7 @@ def leaderboard(request):
 
     # Sort the leaderboard
     users_sorted = sorted(list(users), key=lambda x: x.total_score, reverse=True)
+    users_sorted = filter(lambda x: x.total_score != 0, users_sorted)
 
     scoretable = LeaderboardTable(users_sorted)
 
@@ -68,10 +69,15 @@ def search_movie_scores(request):
         # score.user = score.user
         score.total_score = total_score(score.user)
 
+    scores = filter(lambda x: x.total_score != 0 and x.score != 0, scores)
+
     table = LeaderboardSpecificTable(scores)
     return render(request, "leaderboard/specific.html", {'movie' : movie, 'table' : table})
 
 def total_score(user):
      # Get all the user's games.
     games = UserGame.objects.filter(user_id=user.id)
+    if not games:
+        return 0
+
     return games.aggregate(Sum('score'))['score__sum']

@@ -44,16 +44,16 @@ def game_guess(request):
     if game_played(request, user_game):
         return redirect("main")
 
+    user_game.tries = user_game.tries + 1
+    user_game.save(update_fields=['tries'])
+
     guess = request.POST.get('guess', '')
     if guess.lower().replace(" ", "") == daily_game.movie.title.lower().replace(" ", ""):
-        user_game.score = (allowed_tries - user_game.tries) * score_multiplier
+        user_game.score = (allowed_tries - user_game.tries + 1) * score_multiplier
         user_game.save(update_fields=['score'])
         return redirect("game_won")
-    else: 
-        user_game.tries = user_game.tries + 1
-        user_game.save(update_fields=['tries'])
-        if user_game.tries > 5:
-            return redirect("game_lost")
+    elif user_game.tries > 5:
+        return redirect("game_lost")
 
     return redirect("game")
 
@@ -69,7 +69,7 @@ def game_won(request):
     if user_game.score == 0:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, f'Game won in {user_game.tries + 1} guess(es). Score: {user_game.score} !') 
+    messages.add_message(request, messages.INFO, f'Game won in {user_game.tries} guess(es). Score: {user_game.score} !') 
     return redirect("main")
 
 def game_lost(request):
