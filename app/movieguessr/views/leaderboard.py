@@ -7,7 +7,7 @@ from django.contrib import messages
 
 import django_tables2 as tables
 
-td_center = {"td": {"align": "center"}}
+td_center = {"td": {"align": "center"}, "th" : {"class": "text-center"}}
 
 class LeaderboardTable(tables.Table):
     user = tables.Column(attrs=td_center)
