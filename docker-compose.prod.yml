@@ -11,7 +11,7 @@ services:
     environment:
       - DEBUG=False
       - S3=True
-      - ALLOWED_HOSTS=* # TODO: NOT SECURE * allowing all hosts
+      - ALLOWED_HOSTS=*
     logging:
       driver: awslogs
       options:
