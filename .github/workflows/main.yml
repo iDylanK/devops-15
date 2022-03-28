@@ -6,6 +6,16 @@ env:
   WAIT_HOSTS: localhost:8000
 
 jobs:
+  django-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout repo
+      - name: Run Django Linter
+        id: run-linter
+        run: make lint
+      - name: Output summary to console
+        run: echo ${{ steps.run-linter.outputs.summary }}
   django-tests:
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +31,7 @@ jobs:
           # Follow redirects, or just report success on 3xx status codes
           follow-redirect: false # Optional, defaults to "false"
           # Fail this action after this many failed attempts
-          max-attempts: 7 # Optional, defaults to 1
+          max-attempts: 12 # Optional, defaults to 1
           # Delay between retries
           retry-delay: 5s # Optional, only applicable to max-attempts > 1
           # Retry all errors, including 404. This option might trigger curl upgrade.
