@@ -96,13 +96,12 @@ def games_delete(request):
     return redirect("main")
 
 def find_game(user_id):
-    # TODO: today game..
-    # gameToday = Game.objects.filter(date=dateTodayAsString).first()
-    daily_game = Game.objects.get(date=datetime.today().strftime('%Y-%m-%d'))
-    if daily_game is None:
+    try:
+        daily_game = Game.objects.get(date=datetime.today().strftime('%Y-%m-%d'))
+    except: 
         return None
-    else:
-        user_game = UserGame.objects.filter(user=user_id, game=daily_game.id).first()
+        
+    user_game = UserGame.objects.filter(user=user_id, game=daily_game.id).first()
 
     if user_game is None:
         user_game = UserGame(user=user_id, game=daily_game)
