@@ -11,6 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout repo
+      - name: Install python packages
+      - run: pip3 install -r requirements.txt
       - name: Run Django Linter
         id: run-linter
         run: make lint
