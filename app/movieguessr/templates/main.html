@@ -7,7 +7,7 @@
 <div style="margin-top: 12%;">
     <br><br>
     <div class="mainMenu">
-        <a href="{% url 'game' %}" class="buttonMain">Start game</a>
+        <a class="buttonMain" href="{% url 'game' %}">Start game</a>
 
     </div>
     <br><br>
@@ -23,9 +23,12 @@
 
 {% else %}
 
-<div class="mainMenu">
-    <a href="{% url 'login' %}" class="buttonMain">Login</a>
+<div style="margin-top: 12%;">
+<br><br>
+    <div class="mainMenu">
+        <a href="{% url 'login' %}" class="buttonMain">Login</a>
 
+    </div>
 </div>
 
 {% endif %}

@@ -76,6 +76,7 @@ def store_movies():
                         summary=summary)
                 try:
                     movie.save()
+                    
                     previous_date = Game.objects.last().date
                     if previous_date != None:
                         year = int(previous_date[:4])
@@ -83,11 +84,12 @@ def store_movies():
                         day = int(previous_date[-2:])
                         next_date = datetime(year, month, day) + timedelta(days=1)
                         next_date_str = next_date.strftime('%Y-%m-%d')
-                        print(next_date_str)
+    
                     else:
                         next_date_str = datetime.today().strftime('%Y-%m-%d')
-                    game = Game(date=next_date_str, movie=movie.pk)
+                    game = Game(date=next_date_str, movie=movie)
                     game.save()
+                    
                     movie_list.append(movie.title)
                     saved_movies += 1
                 except:
