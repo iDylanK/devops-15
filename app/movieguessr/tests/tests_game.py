@@ -14,13 +14,13 @@ class GameTests(TestCase):
 
     def test_game_not_today(self):
         '''Test to see if game is not today'''
-        movie = Movie.objects.get(name="Fight Club")
+        movie = Movie.objects.get(title="Fight Club")
         date = datetime.now() - timedelta(days=2)
         game = Game(movie=movie, date=date.strftime('%Y-%m-%d'))
         self.assertIs(game.is_game_today(), False)
    
     def test_game_is_today(self):
         '''Test to see if game is today'''
-        movie = Movie.objects.get(name="Fight Club")
+        movie = Movie.objects.get(title="Fight Club")
         game = Game(movie=movie, date=datetime.now().strftime('%Y-%m-%d'))
         self.assertIs(game.is_game_today(), True)
