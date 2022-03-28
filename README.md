@@ -9,10 +9,12 @@
 - The .env.dev is used for environment settings.
 - Database migrations and collectstatic are done on every boot.
 - To run database migrations manually: `docker exec web_dev python3 manage.py migrate`
-- To set the static folder: `docker exec web_dev python3 manage.py collectstatic --noinput`
+- To set the static folder manually : `docker exec web_dev python3 manage.py collectstatic --noinput`
 
+## Linting
+- Before committing, check django linting using: `make lint`
 
 ## Production
-- To run database migrations manually: `...`
-- To set the static folder: `...`
+- Runs on AWS.
+- Migrations and collecting static files are done automatically.
 
