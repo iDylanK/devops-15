@@ -1,3 +1,5 @@
+'''Adming Django File'''
+
 from django.contrib import admin
 from .models.game import Game
 from .models.movie import Movie

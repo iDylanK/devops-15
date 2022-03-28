@@ -1,37 +1,39 @@
+'''Leadeboard Views'''
+
+import django_tables2 as tables
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from movieguessr.models import Game, UserGame, Movie
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.contrib import messages
-
-import django_tables2 as tables
+from movieguessr.models import Game, UserGame, Movie
 
 td_center = {"td": {"align": "center"}, "th" : {"class": "text-center"}}
 
 class LeaderboardTable(tables.Table):
+    '''LeaderboardTable'''
     user = tables.Column(attrs=td_center)
     total_score = tables.Column(attrs=td_center)
-    
+
     class Meta:
-        row_attrs = {
-            "style": "background-color: #D3D3D3"
-        }
+        '''Meta'''
+        row_attrs = {"style": "background-color: #D3D3D3"}
         template_name = "django_tables2/bootstrap.html"
 
 class LeaderboardSpecificTable(tables.Table):
+    '''LeaderboardSpecificTable'''
     user = tables.Column(attrs=td_center)
     tries = tables.Column(attrs=td_center)
     score = tables.Column(attrs=td_center)
     total_score = tables.Column(attrs=td_center)
-    
+
     class Meta:
-        row_attrs = {
-            "style": "background-color: #D3D3D3;"
-        }
+        '''Meta'''
+        row_attrs = {"style": "background-color: #D3D3D3;"}
         template_name = "django_tables2/bootstrap.html"
 
 def leaderboard(request):
+    '''Shows the leaderboard'''
     if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
 
@@ -49,20 +51,20 @@ def leaderboard(request):
 
     return render(request, "leaderboard/main.html", {"scores":scoretable})
 
-
 def search_movie_scores(request):
+    '''Searches and shows specific Leaderboard'''
     if not request.user.is_authenticated:
         return HttpResponse("Unauthenticated")
-    
+
     movie = request.POST.get('search', '')
 
     try:
         movie_db = Movie.objects.get(title=movie)
         game = Game.objects.get(movie_id=movie_db.id)
-    except: 
-        messages.add_message(request, messages.INFO, f'Movie {movie} not found.') 
+    except:
+        messages.add_message(request, messages.INFO, f'Movie {movie} not found.')
         return redirect("leaderboard")
-        
+
     scores = list(UserGame.objects.filter(game_id = game.id).order_by('-score'))
 
     for score in scores:
@@ -75,7 +77,8 @@ def search_movie_scores(request):
     return render(request, "leaderboard/specific.html", {'movie' : movie, 'table' : table})
 
 def total_score(user):
-     # Get all the user's games.
+    '''Calulate total game score of a user.'''
+    # Get all the user's games.
     games = UserGame.objects.filter(user_id=user.id)
     if not games:
         return 0

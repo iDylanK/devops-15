@@ -1,3 +1,5 @@
+'''Views module'''
+
 from .auth import *
 from .game import *
 from .main import *

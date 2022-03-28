@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "debug-key-default")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# pylint: disable=invalid-envvar-default
 DEBUG = os.getenv('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms'
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4' 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
