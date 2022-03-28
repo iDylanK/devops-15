@@ -1,8 +1,9 @@
+'''Movie model'''
+
 from django.db import models
-# from urllib import request ??
-from django.contrib.auth.models import User
 
 class Movie(models.Model):
+    '''Movie model'''
     title = models.CharField(max_length=200, unique=True)
     image_url = models.URLField(null=True)
     genres = models.CharField(max_length=100, null=True)
@@ -13,4 +14,5 @@ class Movie(models.Model):
     summary = models.TextField(null=True)
 
     def __str__(self):
+        '''Model stirng representation.'''
         return self.title

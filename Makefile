@@ -4,6 +4,10 @@ dev:
 test:
 	docker-compose -f docker-compose.yml -p movieguessr_dev up --detach
 
+lint: 
+	export MOVIEGUESSR_DATABASE_ENGINE=django.db.backends.sqlite3
+	pylint --load-plugins pylint_django --django-settings-module=movieguessr.settings app/movieguessr
+
 prod:
 	docker build -t idylank/movieguessr:web app --target prod
 	docker build -t idylank/movieguessr:nginx nginx
