@@ -68,10 +68,11 @@ body {
 .textHint {
     /*display: none;  hints are not displayed initially*/
     opacity: 1; /*or change the opacity*/
-    font-size: 20px;
+    font-size: 18px;
+    color: gainsboro;
     position: relative;
     text-align: center;
-    padding: 10px;
+    padding: 3px;
     
 }
 .hintStyle {
@@ -101,9 +102,9 @@ body {
     box-shadow: 0px 0px 12px 2px rgb(63, 197, 92);
     border-radius: 8px;
     padding: 10px;
-    font-size: 40px;
+    font-size: 30px;
     margin: 1%;
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(179, 179, 179);
     
 }
 
@@ -112,9 +113,9 @@ body {
     box-shadow: 0px 0px 12px 2px rgb(197, 195, 63);
     border-radius: 8px;
     padding: 10px;
-    font-size: 40px;
+    font-size: 30px;
     margin: 1%;
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(179, 179, 179);
     
 }
 
@@ -123,9 +124,9 @@ body {
     box-shadow: 0px 0px 12px 2px rgb(197, 135, 63);
     border-radius: 8px;
     padding: 10px;
-    font-size: 40px;
+    font-size: 30px;
     margin: 1%;
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(179, 179, 179);
     
 }
 
@@ -134,30 +135,40 @@ body {
     box-shadow: 0px 0px 12px 2px rgb(197, 63, 63);
     border-radius: 8px;
     padding: 10px;
-    font-size: 40px;
+    font-size: 30px;
     margin: 1%;
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(179, 179, 179);
     
 }
 
 .green {
     color: rgb(27, 116, 46);
+    margin: auto;
 }
 
 .yellow {
     color: rgb(192, 189, 13);
+    margin: auto;
 }
 
 .orange {
     color: rgb(218, 113, 16);
+    margin: auto;
 }
 
 .red {
     color: rgb(231, 13, 13);
+    margin: auto;
 }
 
 .title2 {
     padding: 10px;
+    color: gainsboro;
+    opacity: 0;
+}
+
+.title2:hover {
+    opacity: 1;
 }
 
 
@@ -252,6 +263,13 @@ body {
     color: rgb(227, 227, 228);
     font-weight: 10;
     
+}
+
+.buttonMain:hover {
+
+    color: rgb(227, 227, 228);
+    text-decoration: none;
+    font-size: 32px;
 }
 
 .background2 {

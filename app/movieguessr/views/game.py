@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from datetime import datetime
 
 # This should probably be called in another file, should be refactored.
 from movieguessr.models import Game, UserGame
@@ -84,7 +85,7 @@ def game_lost(request):
     if user_game.tries < 6:
         return HttpResponse("Game error..")
     
-    messages.add_message(request, messages.INFO, f'You have used all {allowed_tries} guesses unsuccessfully. Game Lost.  Score: 0.')
+    messages.add_message(request, messages.INFO, f'You have used all {allowed_tries} guesses unsuccessfully. Game Lost.  Score: {user_game.score}.')
     return redirect("main")
 
 def games_delete(request):
@@ -97,7 +98,7 @@ def games_delete(request):
 def find_game(user_id):
     # TODO: today game..
     # gameToday = Game.objects.filter(date=dateTodayAsString).first()
-    daily_game = Game.objects.last() #get(date=datetime.today().strftime('%Y-%m-%d'))
+    daily_game = Game.objects.get(date=datetime.today().strftime('%Y-%m-%d'))
     if daily_game is None:
         return None
     else:

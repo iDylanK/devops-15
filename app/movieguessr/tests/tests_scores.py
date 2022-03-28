@@ -22,9 +22,9 @@ class TotalScoreTestCase(TestCase):
         summary="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.")
         movie1.save()
         # add 2 games
-        game = Game(movie=movie, date=datetime.today().strftime('%Y-%m-%d'))
+        game = Game(movie=movie, date='2022-03-28')
         game.save()
-        game1 = Game(movie=movie1, date=datetime.today().strftime('%Y-%m-%d'))
+        game1 = Game(movie=movie1, date='2022-03-27')
         game1.save()
         # add 2 results of score 600 and 400
         results = UserGame(user=user, game = game, tries=1, score=600)
