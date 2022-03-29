@@ -18,9 +18,10 @@ class LeaderboardTable(tables.Table):
     total_score = tables.Column(attrs=td_center, orderable=False)
 
     def render_counter(self):
+        # pylint: disable=attribute-defined-outside-init
         '''Rank'''
-        row_counter = getattr(self, 'row_counter', itertools.count(1))
-        return next(row_counter)
+        self.row_counter = getattr(self, 'row_counter', itertools.count(1))
+        return next(self.row_counter)
 
     class Meta:
         '''Meta'''
@@ -36,9 +37,10 @@ class LeaderboardSpecificTable(tables.Table):
     total_score = tables.Column(attrs=td_center, orderable=False)
 
     def render_counter(self):
+        # pylint: disable=attribute-defined-outside-init
         '''Rank'''
-        row_counter = getattr(self, 'row_counter', itertools.count(1))
-        return next(row_counter)
+        self.row_counter = getattr(self, 'row_counter', itertools.count(1))
+        return next(self.row_counter)
 
     class Meta:
         '''Meta'''
