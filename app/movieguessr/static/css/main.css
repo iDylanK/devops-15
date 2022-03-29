@@ -82,12 +82,6 @@ body {
 
 .imageBox {
     
-    background: url(testImage.jpg);
-    border: 2px solid rgb(224, 224, 224);
-    background-size: 100% 100%;
-    width: 720px;
-    height: 400px;
-    margin: auto;
     box-shadow: 0px 0px 16px 4px rgb(203, 207, 216);
 }
 .imageC {
@@ -246,6 +240,17 @@ body {
     border: 2px solid rgb(224, 224, 224);
     box-shadow: 0px 0px 8px 2px rgb(226, 228, 226);
     border-radius: 8px;
+    padding: 12px;
+    
+    flex-direction: row;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+
+.mainText {
+    text-align: center;
+    width: 50%;
+    margin: auto;
     padding: 12px;
     
     flex-direction: row;
