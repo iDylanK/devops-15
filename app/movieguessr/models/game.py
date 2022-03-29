@@ -1,6 +1,5 @@
 '''Game model'''
-
-from datetime import date, datetime
+from datetime import datetime
 from django.db import models
 from .movie import Movie
 
@@ -14,4 +13,5 @@ class Game(models.Model):
         return self.movie.title
 
     def is_game_today(self):
+        '''Method that checks whether a given game is today.'''
         return datetime.now().strftime('%Y-%m-%d') == self.date
