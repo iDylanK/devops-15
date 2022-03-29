@@ -7,7 +7,6 @@ from movieguessr.models import Game, Movie, UserGame
 
 class TotalScoreTestCase(TestCase):
     '''A class that tests whether scores are given correctly.'''
-
     def setUp(self):
         '''Method that set-ups objects for the total scores test.'''
         # create new user

@@ -75,7 +75,12 @@ def game_won(request):
     if user_game.score == 0:
         return HttpResponse("Game error..")
 
-    messages.add_message(request, messages.INFO, f'Game won in {user_game.tries} guess(es). Score: {user_game.score} !')
+    if user_game.tries == 1:
+        messages.add_message(request, messages.INFO, f'Congratulations! \
+            You guessed the movie in {user_game.tries} try. Score: {user_game.score}.')
+    else:
+        messages.add_message(request, messages.INFO, f'Congratulations! \
+            You guessed the movie in {user_game.tries} tries. Score: {user_game.score}.')
     return redirect("main")
 
 def game_lost(request):
@@ -90,7 +95,8 @@ def game_lost(request):
     if user_game.tries < 6:
         return HttpResponse("Game error..")
 
-    messages.add_message(request, messages.INFO, f'You have used all {ALLOWED_TRIES} guesses unsuccessfully. Game Lost.  Score: {user_game.score}.')
+    messages.add_message(request, messages.INFO, f'You have used all {ALLOWED_TRIES} guesses unsuccessfully. \
+        Better luck tomorrow! Movie Title: {user_game.game.movie}. Score: {user_game.score}.')
     return redirect("main")
 
 def games_delete(request):
@@ -119,11 +125,13 @@ def find_game(user_id):
 def game_played(request, user_game):
     '''Check if a game is played by a user before.'''
     if user_game.score > 0: # Meaning the game has already been played... What do we do? Redirect?
-        messages.add_message(request, messages.INFO, f'Game already played. Won with score: {user_game.score} points')
+        messages.add_message(request, messages.INFO, f'You have already played the day\'s game. \
+            Movie Title: {user_game.game.movie}. Your score: {user_game.score}. Come back tomorrow for a new movie!')
         return True
 
     if user_game.tries > 5: # Meaning the game has already been played... What do we do? Redirect?
-        messages.add_message(request, messages.INFO, 'Game already played. Lost')
+        messages.add_message(request, messages.INFO, f'You have already played the day\'s game. \
+            Movie Title: {user_game.game.movie}. Your score: {user_game.score}. Come back tomorrow for a new movie!')
         return True
 
     return False

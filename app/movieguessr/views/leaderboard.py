@@ -1,5 +1,5 @@
 '''Leadeboard Views'''
-
+import itertools
 import django_tables2 as tables
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -8,12 +8,19 @@ from django.db.models import Sum
 from django.contrib import messages
 from movieguessr.models import Game, UserGame, Movie
 
-td_center = {"td": {"align": "center"}, "th" : {"class": "text-center"}}
+
+td_center = {"td": {"align": "center"}, "th" : {"class": "text-center text-white-50"}}
 
 class LeaderboardTable(tables.Table):
     '''LeaderboardTable'''
-    user = tables.Column(attrs=td_center)
-    total_score = tables.Column(attrs=td_center)
+    counter = tables.Column(attrs=td_center, verbose_name="#", empty_values=(), orderable=False)
+    user = tables.Column(attrs=td_center, orderable=False)
+    total_score = tables.Column(attrs=td_center, orderable=False)
+
+    def render_counter(self):
+        '''Rank'''
+        row_counter = getattr(self, 'row_counter', itertools.count(1))
+        return next(row_counter)
 
     class Meta:
         '''Meta'''
@@ -22,10 +29,16 @@ class LeaderboardTable(tables.Table):
 
 class LeaderboardSpecificTable(tables.Table):
     '''LeaderboardSpecificTable'''
-    user = tables.Column(attrs=td_center)
-    tries = tables.Column(attrs=td_center)
-    score = tables.Column(attrs=td_center)
-    total_score = tables.Column(attrs=td_center)
+    counter = tables.Column(attrs=td_center, verbose_name="#", empty_values=(), orderable=False)
+    user = tables.Column(attrs=td_center, orderable=False)
+    tries = tables.Column(attrs=td_center, orderable=False)
+    score = tables.Column(attrs=td_center, orderable=False)
+    total_score = tables.Column(attrs=td_center, orderable=False)
+
+    def render_counter(self):
+        '''Rank'''
+        row_counter = getattr(self, 'row_counter', itertools.count(1))
+        return next(row_counter)
 
     class Meta:
         '''Meta'''
@@ -74,7 +87,7 @@ def search_movie_scores(request):
     scores = filter(lambda x: x.total_score != 0 and x.score != 0, scores)
 
     table = LeaderboardSpecificTable(scores)
-    return render(request, "leaderboard/specific.html", {'movie' : movie, 'table' : table})
+    return render(request, "leaderboard/specific.html", {'movie' : movie_db, 'table' : table})
 
 def total_score(user):
     '''Calulate total game score of a user.'''

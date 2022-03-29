@@ -4,7 +4,12 @@
 
 {% if user.is_authenticated %}
 
-<div style="margin-top: 12%;">
+<div class="mainText">
+    <p style="color: gainsboro;">Click on Start Game to play the game of the day. You have 6 guesses. Each time you guess wrong, a new hint will be given, such as the movie genres or an actor. The less wrong guesses, the higher the score.</p>
+
+</div>
+
+<div style="margin-top: 4%;">
     <br><br>
     <div class="mainMenu">
         <a class="buttonMain" href="{% url 'game' %}">Start game</a>
@@ -23,7 +28,11 @@
 
 {% else %}
 
-<div style="margin-top: 12%;">
+<div class="mainText">
+    <p style="color: gainsboro;">Welcome to MovieGuessr, a game for cinema addicts! How much do you know about movies? Use your cinema knowledge to find the movie title. A new movie is available every day. Do you have what it takes to climb up the ranks and become the master of movies? Log in now and find out!</p>
+
+</div>
+<div style="margin-top: 8%;">
 <br><br>
     <div class="mainMenu">
         <a href="{% url 'login' %}" class="buttonMain">Login</a>
