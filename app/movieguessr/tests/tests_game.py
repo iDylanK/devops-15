@@ -4,7 +4,7 @@ from movieguessr.models import Game, Movie
 
 class GameTests(TestCase):
     def setUp(self):
-        '''This method setups the tests.'''
+        '''This method setups the tests by creating a sample movie object.'''
         Movie.objects.create(
             title="Fight Club", 
             image_url="https://image.tmdb.org/t/p/original/rr7E0NoGKxvbkb89eR1GwfoYjpA.jpg",
