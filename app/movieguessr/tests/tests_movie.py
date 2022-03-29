@@ -24,7 +24,7 @@ class MovieModelTests(TestCase):
         movie = Movie.objects.get(title="Fight Club")
         self.assertIsNotNone(movie)
 
-    def test_movie_retrieval_null(self):
+    def test_movie_retrieval_fail(self):
         '''Test to ensure that if searching for a movie doesn't exist null gets returned.'''
-        movie = Movie.objects.get(title="A good year") # movie that for sure doesn't exist.
-        self.assertIsNone(movie)
+        with self.assertRaises(Movie.DoesNotExist):
+            movie = Movie.objects.get(title="A good year") # movie that doesn't exist for sure.
