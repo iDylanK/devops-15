@@ -283,6 +283,19 @@ body {
     background: linear-gradient(rgb(27, 27, 27),rgb(75, 75, 75));
     font-family: 'Josefin Sans', sans-serif;
     color: rgb(255, 255, 255);
+}
 
-   
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
 }
