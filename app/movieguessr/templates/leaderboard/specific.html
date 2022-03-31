@@ -9,7 +9,9 @@
 
 <h1 style="color: gainsboro">{{ movie }} Leaderboard</h1><br>
 {% load django_tables2 %}
+<div style="height: 600px; overflow-y:scroll">
 {% render_table table %}
+</div>
 
 {% else %}
 

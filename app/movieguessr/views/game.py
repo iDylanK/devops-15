@@ -110,7 +110,7 @@ def games_delete(request):
 def find_game(user_id):
     '''Find a game'''
     try:
-        daily_game = Game.objects.get(date=datetime.today().strftime('%Y-%m-%d'))
+        daily_game = Game.objects.get(movie__title = "The Ring")#date=datetime.today().strftime('%Y-%m-%d'))
     except:
         return None
 
