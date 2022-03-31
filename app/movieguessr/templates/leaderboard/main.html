@@ -7,8 +7,10 @@
 {% include 'leaderboard/search.html' %}
 
 <h1 style="color:gainsboro">Total Score Leaderboard</h1><br>
-{% load django_tables2 %} 
+{% load django_tables2 %}
+<div style="height: 600px; overflow-y:scroll"> 
 {% render_table scores %}
+</div>
 
 {% else %}
 
